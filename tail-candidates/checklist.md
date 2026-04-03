@@ -2,7 +2,7 @@
 
 > 체크 규칙: 해당 gutenberg_id의 raw 파일이 `gutenberg-raw/`에 저장되면 `[x]`로 변경
 
-## 이솝 우화 (1-20) — G #11339
+## 이솝 우화 (1-274) — G #11339
 
 - [x] 1\. 개미와 베짱이 — The Ant and the Grasshopper
 - [x] 2\. 토끼와 거북이 — The Tortoise and the Hare
@@ -24,6 +24,260 @@
 - [x] 18\. 개구리와 황소 — The Frog and the Ox
 - [x] 19\. 생쥐 회의 — Belling the Cat
 - [x] 20\. 토끼와 사냥개 — The Hare and the Hound
+- [ ] 21\. 고양이와 쥐들 — The Cat and the Mice
+- [ ] 22\. 못된 개 — The Mischievous Dog
+- [ ] 23\. 숯장수와 표백공 — The Charcoal-Burner and the Fuller
+- [ ] 24\. 개와 암퇘지 — The Dog and the Sow
+- [ ] 25\. 여우와 까마귀 — The Fox and the Crow
+- [ ] 26\. 말과 마부 — The Horse and the Groom
+- [ ] 27\. 늑대와 어린양 — The Wolf and the Lamb
+- [ ] 28\. 공작과 두루미 — The Peacock and the Crane
+- [ ] 29\. 고양이와 새들 — The Cat and the Birds
+- [ ] 30\. 낭비꾼과 제비 — The Spendthrift and the Swallow
+- [ ] 31\. 노파와 의사 — The Old Woman and the Doctor
+- [ ] 32\. 달과 어머니 — The Moon and Her Mother
+- [ ] 33\. 당나귀·여우·사자 — The Ass, the Fox, and the Lion
+- [ ] 34\. 소년들과 개구리 — The Boys and the Frogs
+- [ ] 35\. 여주인과 하녀들 — The Mistress and Her Servants
+- [ ] 36\. 좋은 것과 나쁜 것 — The Goods and the Ills
+- [ ] 37\. 토끼와 개구리들 — The Hares and the Frogs
+- [ ] 38\. 여우와 두루미 — The Fox and the Stork
+- [ ] 39\. 외양간 속의 사슴 — The Stag in the Ox-Stall
+- [ ] 40\. 우유 짜는 아가씨와 물통 — The Milkmaid and Her Pail
+- [ ] 41\. 돌고래·고래·멸치 — The Dolphins, the Whales, and the Sprat
+- [ ] 42\. 여우와 원숭이 — The Fox and the Monkey
+- [ ] 43\. 당나귀와 무릎개 — The Ass and the Lap-Dog
+- [ ] 44\. 전나무와 가시덤불 — The Fir-Tree and the Bramble
+- [ ] 45\. 개구리의 태양 불만 — The Frogs' Complaint Against the Sun
+- [ ] 46\. 개·수탉·여우 — The Dog, the Cock, and the Fox
+- [ ] 47\. 각다귀와 황소 — The Gnat and the Bull
+- [ ] 48\. 곰과 나그네들 — The Bear and the Travellers
+- [ ] 49\. 노예와 사자 — The Slave and the Lion
+- [ ] 50\. 벼룩과 사람 — The Flea and the Man
+- [ ] 51\. 꿀벌과 제우스 — The Bee and Jupiter
+- [ ] 52\. 참나무와 갈대 — The Oak and the Reeds
+- [ ] 53\. 장님과 새끼 짐승 — The Blind Man and the Cub
+- [ ] 54\. 소년과 달팽이 — The Boy and the Snails
+- [ ] 55\. 원숭이와 두 나그네 — The Apes and the Two Travellers
+- [ ] 56\. 당나귀와 짐 — The Ass and His Burdens
+- [ ] 57\. 여우와 염소 — The Fox and the Goat
+- [ ] 58\. 어부와 멸치 — The Fisherman and the Sprat
+- [ ] 59\. 허풍쟁이 나그네 — The Boasting Traveller
+- [ ] 60\. 게와 어머니 — The Crab and His Mother
+- [ ] 61\. 당나귀와 그림자 — The Ass and His Shadow
+- [ ] 62\. 농부와 아들들 — The Farmer and His Sons
+- [ ] 63\. 개와 요리사 — The Dog and the Cook
+- [ ] 64\. 왕이 된 원숭이 — The Monkey as King
+- [ ] 65\. 도둑과 수탉 — The Thieves and the Cock
+- [ ] 66\. 농부와 행운의 여신 — The Farmer and Fortune
+- [ ] 67\. 제우스와 원숭이 — Jupiter and the Monkey
+- [ ] 68\. 아버지와 아들들 — Father and Sons
+- [ ] 69\. 등잔 — The Lamp
+- [ ] 70\. 올빼미와 새들 — The Owl and the Birds
+- [ ] 71\. 사자 가죽을 쓴 당나귀 — The Ass in the Lion's Skin
+- [ ] 72\. 암염소와 수염 — The She-Goats and Their Beards
+- [ ] 73\. 늙은 사자 — The Old Lion
+- [ ] 74\. 목욕하는 소년 — The Boy Bathing
+- [ ] 75\. 돌팔이 개구리 — The Quack Frog
+- [ ] 76\. 배 부른 여우 — The Swollen Fox
+- [ ] 77\. 쥐·개구리·매 — The Mouse, the Frog, and the Hawk
+- [ ] 78\. 소년과 쐐기풀 — The Boy and the Nettles
+- [ ] 79\. 농부와 사과나무 — The Peasant and the Apple-Tree
+- [ ] 80\. 갈까마귀와 비둘기 — The Jackdaw and the Pigeons
+- [ ] 81\. 제우스와 거북이 — Jupiter and the Tortoise
+- [ ] 82\. 구유 속의 개 — The Dog in the Manger
+- [ ] 83\. 두 개의 자루 — The Two Bags
+- [ ] 84\. 소와 수레축 — The Oxen and the Axletrees
+- [ ] 85\. 소년과 개암 — The Boy and the Filberts
+- [ ] 86\. 왕을 달라는 개구리 — The Frogs Asking for a King
+- [ ] 87\. 올리브나무와 무화과나무 — The Olive-Tree and the Fig-Tree
+- [ ] 88\. 사자와 멧돼지 — The Lion and the Boar
+- [ ] 89\. 호두나무 — The Walnut-Tree
+- [ ] 90\. 사람과 사자 — The Man and the Lion
+- [ ] 91\. 거북이와 독수리 — The Tortoise and the Eagle
+- [ ] 92\. 지붕 위의 아기 염소 — The Kid on the Housetop
+- [ ] 93\. 꼬리 잘린 여우 — The Fox Without a Tail
+- [ ] 94\. 허영 많은 갈까마귀 — The Vain Jackdaw
+- [ ] 95\. 나그네와 개 — The Traveller and His Dog
+- [ ] 96\. 난파한 사람과 바다 — The Shipwrecked Man and the Sea
+- [ ] 97\. 멧돼지와 여우 — The Wild Boar and the Fox
+- [ ] 98\. 헤르메스와 조각가 — Mercury and the Sculptor
+- [ ] 99\. 새끼 사슴과 어머니 — The Fawn and His Mother
+- [ ] 100\. 여우와 사자 — The Fox and the Lion
+- [ ] 101\. 독수리와 포획자 — The Eagle and His Captor
+- [ ] 102\. 대장장이와 개 — The Blacksmith and His Dog
+- [ ] 103\. 헤르메스와 상인들 — Mercury and the Tradesmen
+- [ ] 104\. 쥐와 족제비 — The Mice and the Weasels
+- [ ] 105\. 공작과 유노 — The Peacock and Juno
+- [ ] 106\. 곰과 여우 — The Bear and the Fox
+- [ ] 107\. 당나귀와 늙은 농부 — The Ass and the Old Peasant
+- [ ] 108\. 사람과 신상 — The Man and the Image
+- [ ] 109\. 헤라클레스와 마부 — Hercules and the Waggoner
+- [ ] 110\. 석류·사과나무·가시덤불 — The Pomegranate, the Apple-Tree, and the Bramble
+- [ ] 111\. 사자·곰·여우 — The Lion, the Bear, and the Fox
+- [ ] 112\. 에티오피아인 — The Blackamoor
+- [ ] 113\. 두 병사와 강도 — The Two Soldiers and the Robber
+- [ ] 114\. 사자와 들당나귀 — The Lion and the Wild Ass
+- [ ] 115\. 사람과 사티로스 — The Man and the Satyr
+- [ ] 116\. 신상 장수 — The Image-Seller
+- [ ] 117\. 독수리와 화살 — The Eagle and the Arrow
+- [ ] 118\. 부자와 가죽장이 — The Rich Man and the Tanner
+- [ ] 119\. 늑대·어머니·아이 — The Wolf, the Mother, and Her Child
+- [ ] 120\. 노파와 포도주 단지 — The Old Woman and the Wine-Jar
+- [ ] 121\. 암사자와 암여우 — The Lioness and the Vixen
+- [ ] 122\. 독사와 줄 — The Viper and the File
+- [ ] 123\. 고양이와 수탉 — The Cat and the Cock
+- [ ] 124\. 병사와 말 — The Soldier and His Horse
+- [ ] 125\. 소와 도살업자 — The Oxen and the Butchers
+- [ ] 126\. 늑대와 사자 — The Wolf and the Lion
+- [ ] 127\. 양·늑대·사슴 — The Sheep, the Wolf, and the Stag
+- [ ] 128\. 사자와 세 마리 황소 — The Lion and the Three Bulls
+- [ ] 129\. 말과 기수 — The Horse and His Rider
+- [ ] 130\. 염소와 포도나무 — The Goat and the Vine
+- [ ] 131\. 두 개의 항아리 — The Two Pots
+- [ ] 132\. 늙은 사냥개 — The Old Hound
+- [ ] 133\. 어릿광대와 시골 사람 — The Clown and the Countryman
+- [ ] 134\. 종달새와 농부 — The Lark and the Farmer
+- [ ] 135\. 사자와 당나귀 — The Lion and the Ass
+- [ ] 136\. 예언자 — The Prophet
+- [ ] 137\. 사냥개와 토끼 — The Hound and the Hare
+- [ ] 138\. 사자·쥐·여우 — The Lion, the Mouse, and the Fox
+- [ ] 139\. 나팔수 포로 — The Trumpeter Taken Prisoner
+- [ ] 140\. 늑대와 두루미 — The Wolf and the Crane
+- [ ] 141\. 독수리·고양이·멧돼지 — The Eagle, the Cat, and the Wild Sow
+- [ ] 142\. 늑대와 양 — The Wolf and the Sheep
+- [ ] 143\. 다랑어와 돌고래 — The Tunny-Fish and the Dolphin
+- [ ] 144\. 세 명의 장인 — The Three Tradesmen
+- [ ] 145\. 쥐와 황소 — The Mouse and the Bull
+- [ ] 146\. 사자와 황소 — The Lion and the Bull
+- [ ] 147\. 늑대·여우·원숭이 — The Wolf, the Fox, and the Ape
+- [ ] 148\. 독수리와 수탉 — The Eagle and the Cocks
+- [ ] 149\. 탈출한 갈까마귀 — The Escaped Jackdaw
+- [ ] 150\. 농부와 여우 — The Farmer and the Fox
+- [ ] 151\. 비너스와 고양이 — Venus and the Cat
+- [ ] 152\. 까마귀와 백조 — The Crow and the Swan
+- [ ] 153\. 외눈박이 사슴 — The Stag with One Eye
+- [ ] 154\. 파리와 짐 끄는 노새 — The Fly and the Draught-Mule
+- [ ] 155\. 수탉과 보석 — The Cock and the Jewel
+- [ ] 156\. 늑대와 목동 — The Wolf and the Shepherd
+- [ ] 157\. 농부와 황새 — The Farmer and the Stork
+- [ ] 158\. 군마와 방앗간 주인 — The Charger and the Miller
+- [ ] 159\. 메뚜기와 올빼미 — The Grasshopper and the Owl
+- [ ] 160\. 농부와 독사 — The Farmer and the Viper
+- [ ] 161\. 두 마리 개구리 — The Two Frogs
+- [ ] 162\. 구두장이 돌팔이 의사 — The Cobbler Turned Doctor
+- [ ] 163\. 당나귀·수탉·사자 — The Ass, the Cock, and the Lion
+- [ ] 164\. 배와 사지 — The Belly and the Members
+- [ ] 165\. 대머리와 파리 — The Bald Man and the Fly
+- [ ] 166\. 당나귀와 늑대 — The Ass and the Wolf
+- [ ] 167\. 원숭이와 낙타 — The Monkey and the Camel
+- [ ] 168\. 아픈 사람과 의사 — The Sick Man and the Doctor
+- [ ] 169\. 나그네와 플라타너스 — The Travellers and the Plane-Tree
+- [ ] 170\. 벼룩과 소 — The Flea and the Ox
+- [ ] 171\. 새·짐승·박쥐 — The Birds, the Beasts, and the Bat
+- [ ] 172\. 사내와 두 연인 — The Man and His Two Sweethearts
+- [ ] 173\. 독수리·갈까마귀·목동 — The Eagle, the Jackdaw, and the Shepherd
+- [ ] 174\. 늑대와 소년 — The Wolf and the Boy
+- [ ] 175\. 방앗간 주인·아들·당나귀 — The Miller, His Son, and Their Ass
+- [ ] 176\. 사슴과 포도나무 — The Stag and the Vine
+- [ ] 177\. 늑대에 쫓긴 어린양 — The Lamb Chased by a Wolf
+- [ ] 178\. 궁수와 사자 — The Archer and the Lion
+- [ ] 179\. 늑대와 염소 — The Wolf and the Goat
+- [ ] 180\. 아픈 사슴 — The Sick Stag
+- [ ] 181\. 당나귀와 노새 — The Ass and the Mule
+- [ ] 182\. 오누이 — Brother and Sister
+- [ ] 183\. 암송아지와 소 — The Heifer and the Ox
+- [ ] 184\. 사자의 왕국 — The Kingdom of the Lion
+- [ ] 185\. 당나귀와 몰이꾼 — The Ass and His Driver
+- [ ] 186\. 사자와 토끼 — The Lion and the Hare
+- [ ] 187\. 늑대 떼와 개 떼 — The Wolves and the Dogs
+- [ ] 188\. 황소와 송아지 — The Bull and the Calf
+- [ ] 189\. 나무와 도끼 — The Trees and the Axe
+- [ ] 190\. 천문학자 — The Astronomer
+- [ ] 191\. 일꾼과 뱀 — The Labourer and the Snake
+- [ ] 192\. 새장 속 새와 박쥐 — The Cage-Bird and the Bat
+- [ ] 193\. 당나귀와 구매자 — The Ass and His Purchaser
+- [ ] 194\. 아기 염소와 늑대 — The Kid and the Wolf
+- [ ] 195\. 채무자와 암퇘지 — The Debtor and His Sow
+- [ ] 196\. 대머리 사냥꾼 — The Bald Huntsman
+- [ ] 197\. 목동과 잃어버린 소 — The Herdsman and the Lost Bull
+- [ ] 198\. 노새 — The Mule
+- [ ] 199\. 사냥개와 여우 — The Hound and the Fox
+- [ ] 200\. 아버지와 딸들 — The Father and His Daughters
+- [ ] 201\. 도둑과 여관 주인 — The Thief and the Innkeeper
+- [ ] 202\. 짐 당나귀와 들당나귀 — The Pack-Ass and the Wild Ass
+- [ ] 203\. 당나귀와 주인들 — The Ass and His Masters
+- [ ] 204\. 짐 당나귀·들당나귀·사자 — The Pack-Ass, the Wild Ass, and the Lion
+- [ ] 205\. 개미 — The Ant
+- [ ] 206\. 개구리와 우물 — The Frogs and the Well
+- [ ] 207\. 게와 여우 — The Crab and the Fox
+- [ ] 208\. 여우와 메뚜기 — The Fox and the Grasshopper
+- [ ] 209\. 농부·아들·까마귀 떼 — The Farmer, His Boy, and the Rooks
+- [ ] 210\. 당나귀와 개 — The Ass and the Dog
+- [ ] 211\. 신상을 나르는 당나귀 — The Ass Carrying the Image
+- [ ] 212\. 아테네인과 테베인 — The Athenian and the Theban
+- [ ] 213\. 염소지기와 염소 — The Goatherd and the Goat
+- [ ] 214\. 양과 개 — The Sheep and the Dog
+- [ ] 215\. 목동과 늑대 — The Shepherd and the Wolf
+- [ ] 216\. 사자·제우스·코끼리 — The Lion, Jupiter, and the Elephant
+- [ ] 217\. 돼지와 양 — The Pig and the Sheep
+- [ ] 218\. 정원사와 개 — The Gardener and His Dog
+- [ ] 219\. 강과 바다 — The Rivers and the Sea
+- [ ] 220\. 사랑에 빠진 사자 — The Lion in Love
+- [ ] 221\. 양봉가 — The Bee-Keeper
+- [ ] 222\. 늑대와 말 — The Wolf and the Horse
+- [ ] 223\. 박쥐·가시덤불·갈매기 — The Bat, the Bramble, and the Seagull
+- [ ] 224\. 개와 늑대 — The Dog and the Wolf
+- [ ] 225\. 말벌과 뱀 — The Wasp and the Snake
+- [ ] 226\. 독수리와 딱정벌레 — The Eagle and the Beetle
+- [ ] 227\. 새잡이와 종달새 — The Fowler and the Lark
+- [ ] 228\. 피리 부는 어부 — The Fisherman Piping
+- [ ] 229\. 족제비와 사람 — The Weasel and the Man
+- [ ] 230\. 농부·당나귀·소 — The Ploughman, the Ass, and the Ox
+- [ ] 231\. 데마데스의 우화 — Demades and His Fable
+- [ ] 232\. 원숭이와 돌고래 — The Monkey and the Dolphin
+- [ ] 233\. 까마귀와 뱀 — The Crow and the Snake
+- [ ] 234\. 개들과 여우 — The Dogs and the Fox
+- [ ] 235\. 나이팅게일과 매 — The Nightingale and the Hawk
+- [ ] 236\. 장미와 아마란스 — The Rose and the Amaranth
+- [ ] 237\. 사람·말·소·개 — The Man, the Horse, the Ox, and the Dog
+- [ ] 238\. 늑대 떼·양 떼·숫양 — The Wolves, the Sheep, and the Ram
+- [ ] 239\. 백조 — The Swan
+- [ ] 240\. 뱀과 제우스 — The Snake and Jupiter
+- [ ] 241\. 늑대와 그림자 — The Wolf and His Shadow
+- [ ] 242\. 농부와 늑대 — The Ploughman and the Wolf
+- [ ] 243\. 헤르메스와 개미에 물린 사람 — Mercury and the Man Bitten by an Ant
+- [ ] 244\. 교활한 사자 — The Wily Lion
+- [ ] 245\. 앵무새와 고양이 — The Parrot and the Cat
+- [ ] 246\. 사슴과 사자 — The Stag and the Lion
+- [ ] 247\. 사기꾼 — The Impostor
+- [ ] 248\. 개들과 가죽 — The Dogs and the Hides
+- [ ] 249\. 사자·여우·당나귀 — The Lion, the Fox, and the Ass
+- [ ] 250\. 새잡이·자고새·수탉 — The Fowler, the Partridge, and the Cock
+- [ ] 251\. 각다귀와 사자 — The Gnat and the Lion
+- [ ] 252\. 농부와 개들 — The Farmer and His Dogs
+- [ ] 253\. 독수리와 여우 — The Eagle and the Fox
+- [ ] 254\. 도살업자와 손님들 — The Butcher and His Customers
+- [ ] 255\. 헤라클레스와 아테나 — Hercules and Minerva
+- [ ] 256\. 사자를 섬긴 여우 — The Fox Who Served a Lion
+- [ ] 257\. 돌팔이 의사 — The Quack Doctor
+- [ ] 258\. 사자·늑대·여우 — The Lion, the Wolf, and the Fox
+- [ ] 259\. 헤라클레스와 플루투스 — Hercules and Plutus
+- [ ] 260\. 여우와 표범 — The Fox and the Leopard
+- [ ] 261\. 여우와 고슴도치 — The Fox and the Hedgehog
+- [ ] 262\. 까마귀와 큰까마귀 — The Crow and the Raven
+- [ ] 263\. 마녀 — The Witch
+- [ ] 264\. 노인과 죽음 — The Old Man and Death
+- [ ] 265\. 구두쇠 — The Miser
+- [ ] 266\. 여우 떼와 강 — The Foxes and the River
+- [ ] 267\. 말과 사슴 — The Horse and the Stag
+- [ ] 268\. 여우와 가시덤불 — The Fox and the Bramble
+- [ ] 269\. 여우와 뱀 — The Fox and the Snake
+- [ ] 270\. 사자·여우·사슴 — The Lion, the Fox, and the Stag
+- [ ] 271\. 삽을 잃어버린 사람 — The Man Who Lost His Spade
+- [ ] 272\. 자고새와 새잡이 — The Partridge and the Fowler
+- [ ] 273\. 도망친 노예 — The Runaway Slave
+- [ ] 274\. 사냥꾼과 나무꾼 — The Hunter and the Woodman
 
 ## 그림 형제 (21-30)
 
