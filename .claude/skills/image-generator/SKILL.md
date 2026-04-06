@@ -17,6 +17,7 @@ description: temp-story의 동화 마크다운을 읽어 각 컷별로 프롬프
 예시 트리거:
 - "여우와 두루미 이미지 생성해줘"
 - "/image-generator 여우와 두루미"
+- "/image-generator 여우와 두루미 --regen-prompts" (프롬프트 강제 재생성)
 
 ## 규약 (Convention)
 
@@ -42,13 +43,11 @@ description: temp-story의 동화 마크다운을 읽어 각 컷별로 프롬프
 
 1. 사용자의 요청에서 대상 스토리명을 파악한다
 2. `temp-story/{스토리명}.md`가 존재하는지 확인한다 (없으면 에러 보고)
-3. **image-prompt-writer 에이전트를 Agent 도구로 spawn한다**
-   - 입력: 스토리명
-   - 출력: `temp-image/{스토리명}/prompts.json`
-   - 기존 prompts.json이 있어도 **덮어쓴다**
+3. `temp-image/{스토리명}/prompts.json` 존재 여부를 확인한다
+   - **없거나** `--regen-prompts` 플래그가 있으면: **image-prompt-writer 에이전트를 spawn**하여 생성
+   - **있고** 플래그가 없으면: **스킵**하고 바로 4번으로 진행
 4. `temp-image/{스토리명}/ref-image/`에 레퍼런스 이미지가 있는지 확인한다
    - 없으면 사용자에게 레퍼런스를 먼저 넣어달라고 요청하고 **이미지 생성 단계는 중단**한다
-   - (prompts.json은 이미 작성되어 있으므로 사용자가 레퍼런스 준비 후 skill을 재호출하면 이어서 진행 가능)
 5. **image-generator 에이전트를 Agent 도구로 spawn한다**
    - 입력: 스토리명
    - 동작: prompts.json의 각 컷에 대해 gen_image.py 호출
@@ -69,7 +68,8 @@ description: temp-story의 동화 마크다운을 읽어 각 컷별로 프롬프
 
 - 이미지 생성은 Gemini API 비용이 발생한다 (장당 약 $0.04)
 - 동일 스토리를 재실행할 경우:
-  - `prompts.json`은 **덮어쓴다** (image-prompt-writer 재작성)
+  - `prompts.json`이 이미 있으면 **스킵**한다 (사용자가 수동 편집했을 수 있으므로 보존)
+  - `--regen-prompts` 플래그를 붙이면 prompts.json을 **강제 재생성**한다
   - `cuts/*.png`는 **덮어쓴다** (image-generator 재생성)
 - 레퍼런스 이미지가 없으면 이미지 생성 단계는 실패하지만, prompts.json은 이미 작성되어 있으므로 사용자가 레퍼런스 준비 후 skill을 재호출하면 이어서 진행할 수 있다
 - `GEMINI_API_KEY`는 프로젝트 루트의 `.env`에 이미 설정되어 있다 (스크립트가 자동 로드)
