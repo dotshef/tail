@@ -11,7 +11,15 @@
       "Bash(mv tail-zh-tw:*)",
       "Bash(grep -E \"\\\\.\\(md|json|yaml|yml|toml\\)$\")",
       "Edit(/.claude/skills/story-writer/**)",
-      "Edit(/.claude/skills/book-editor/**)"
+      "Edit(/.claude/skills/book-editor/**)",
+      "Bash(npx --yes puppeteer --version)",
+      "Bash(node -e \"try{require\\('puppeteer'\\);console.log\\('puppeteer: installed'\\)}catch\\(e\\){console.log\\('puppeteer: not installed'\\)}\")",
+      "Bash(pip show:*)",
+      "Bash(node -e \"console.log\\('node available'\\)\")",
+      "Bash(npm list:*)",
+      "Edit(/.claude/skills/pdf-generator/**)",
+      "Bash(node -e \"require\\('puppeteer'\\)\")",
+      "Bash(playwright install:*)"
     ],
     "deny": [
       "Read(./.env)",
