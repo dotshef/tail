@@ -97,14 +97,10 @@ tail-diff-analyzed의 분석본을 특정 언어로 로컬라이즈하는 에이
 ```markdown
 ---
 title: 여우와 두루미
-author: 이솝 (Aesop)
 lang: {lang 코드}
 difficulty:
   level: 2.6
   ... (원본 그대로)
-source: tail-diff-analyzed/{스토리명}.md
-analyzed_by: claude
-localized_by: claude
 ---
 
 # 여우와 두루미
@@ -116,6 +112,6 @@ localized_by: claude
 ## 주의사항
 
 - 한국어 본문, 대사, 컷 설명 등은 절대 수정하지 않는다
-- frontmatter의 기존 필드는 그대로 유지하고 `lang`, `localized_by`만 추가한다
+- frontmatter의 기존 필드는 그대로 유지하고 `lang`만 추가한다
 - `<!-- expressions -->` 블록 구조(HTML 주석)를 유지한다
 - 번역은 자연스럽고 정확해야 한다 — 직역보다 의역을 선호한다

@@ -8,7 +8,9 @@
       "Bash(mkdir -p tail-midform)",
       "Bash(mv tail-en:*)",
       "Bash(mv tail-ja:*)",
-      "Bash(mv tail-zh-tw:*)"
+      "Bash(mv tail-zh-tw:*)",
+      "Bash(grep -E \"\\\\.\\(md|json|yaml|yml|toml\\)$\")",
+      "Edit(/.claude/skills/book-writer/**)"
     ],
     "deny": [
       "Read(./.env)",
