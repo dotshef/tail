@@ -3,7 +3,12 @@
     "allow": [
       "Edit(/.claude/skills/image-generator/**)",
       "Bash(git -C /c/D/tail status --short)",
-      "Edit(/.claude/skills/localizer/**)"
+      "Edit(/.claude/skills/localizer/**)",
+      "Bash(mv tail-analyzed:*)",
+      "Bash(mkdir -p tail-midform)",
+      "Bash(mv tail-en:*)",
+      "Bash(mv tail-ja:*)",
+      "Bash(mv tail-zh-tw:*)"
     ],
     "deny": [
       "Read(./.env)",
