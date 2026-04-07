@@ -10,7 +10,8 @@
       "Bash(mv tail-ja:*)",
       "Bash(mv tail-zh-tw:*)",
       "Bash(grep -E \"\\\\.\\(md|json|yaml|yml|toml\\)$\")",
-      "Edit(/.claude/skills/book-writer/**)"
+      "Edit(/.claude/skills/story-writer/**)",
+      "Edit(/.claude/skills/book-editor/**)"
     ],
     "deny": [
       "Read(./.env)",
