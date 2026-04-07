@@ -1,5 +1,10 @@
 {
   "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./temp-tail-test/**)"
+    ],
     "allow": [
       "Edit(/.claude/skills/image-generator/**)",
       "Bash(git -C /c/D/tail status --short)"
