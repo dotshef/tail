@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Edit(/.claude/skills/image-generator/**)"
+      "Edit(/.claude/skills/image-generator/**)",
+      "Bash(git -C /c/D/tail status --short)"
     ]
   }
 }
