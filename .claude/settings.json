@@ -1,13 +1,17 @@
 {
   "permissions": {
+    "allow": [
+      "Edit(/.claude/skills/image-generator/**)",
+      "Bash(git -C /c/D/tail status --short)",
+      "Edit(/.claude/skills/localizer/**)"
+    ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
       "Read(./temp-tail-test/**)"
     ],
-    "allow": [
-      "Edit(/.claude/skills/image-generator/**)",
-      "Bash(git -C /c/D/tail status --short)"
+    "additionalDirectories": [
+      "c:\\D\\tail\\.claude\\skills"
     ]
   }
 }
