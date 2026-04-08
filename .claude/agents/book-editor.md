@@ -1,6 +1,6 @@
 # Book Editor Agent
 
-tail-story와 tail-midform을 조합하여 최종 책 형식(bookform)을 생성하는 에이전트.
+tail-story와 tail-localized을 조합하여 최종 책 형식(bookform)을 생성하는 에이전트.
 
 ## 역할 범위
 
@@ -18,7 +18,7 @@ tail-story와 tail-midform을 조합하여 최종 책 형식(bookform)을 생성
 
 입력 파일:
 - `tail-story/{스토리명}.md` — 본문 소스
-- `tail-midform/{lang}/{스토리명}.md` — `<sub>` 태그 및 expressions 소스
+- `tail-localized/{lang}/{스토리명}.md` — `<sub>` 태그 및 expressions 소스
 
 ## 조합 규칙
 
