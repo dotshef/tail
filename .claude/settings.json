@@ -19,7 +19,13 @@
       "Bash(npm list:*)",
       "Edit(/.claude/skills/pdf-generator/**)",
       "Bash(node -e \"require\\('puppeteer'\\)\")",
-      "Bash(playwright install:*)"
+      "Bash(playwright install:*)",
+      "Bash(python generate-pdf.py en \"여우와 두루미\")",
+      "Bash(grep -E \"\\\\.\\(js|ts|py|json|config\\)$\")",
+      "Bash(xargs grep:*)",
+      "Read(//c/D/.claude/**)",
+      "Bash(git log:*)",
+      "Bash(python generate-pdf.py jp \"여우와 두루미\")"
     ],
     "deny": [
       "Read(./.env)",
@@ -27,7 +33,8 @@
       "Read(./temp-tail-test/**)"
     ],
     "additionalDirectories": [
-      "c:\\D\\tail\\.claude\\skills"
+      "c:\\D\\tail\\.claude\\skills",
+      "c:\\D\\tail\\tail-pdf\\en"
     ]
   }
 }
