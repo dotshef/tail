@@ -1,6 +1,6 @@
 ---
 name: localizer
-description: tail-diff-analyzed의 분석본을 각국 언어(영어, 중국어 번체, 일본어)로 로컬라이즈하여 tail-midform/{lang} 폴더에 저장하는 진입점
+description: tail-analyzed의 분석본을 각국 언어(영어, 중국어 번체, 일본어)로 로컬라이즈하여 tail-midform/{lang} 폴더에 저장하는 진입점
 ---
 
 # Localizer Skill (진입점)
@@ -20,7 +20,7 @@ description: tail-diff-analyzed의 분석본을 각국 언어(영어, 중국어 
 
 ### 입력
 
-- 분석 완료 마크다운: `tail-diff-analyzed/{스토리명}.md`
+- 분석 완료 마크다운: `tail-analyzed/{스토리명}.md`
 
 ### 출력
 
@@ -31,7 +31,7 @@ description: tail-diff-analyzed의 분석본을 각국 언어(영어, 중국어 
 ## 동작
 
 1. 사용자의 요청에서 대상 스토리명을 파악한다
-2. `tail-diff-analyzed/{스토리명}.md`가 존재하는지 확인한다 (없으면 에러 보고)
+2. `tail-analyzed/{스토리명}.md`가 존재하는지 확인한다 (없으면 에러 보고)
 3. 출력 폴더(`tail-midform/en/`, `tail-midform/zh-tw/`, `tail-midform/jp/`)가 없으면 생성한다
 4. **언어별로 localizer 에이전트를 병렬 spawn한다** (3개 동시)
    - 각 에이전트에 스토리명과 대상 언어를 전달한다

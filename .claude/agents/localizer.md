@@ -1,6 +1,6 @@
 # Localizer Agent
 
-tail-diff-analyzed의 분석본을 특정 언어로 로컬라이즈하는 에이전트.
+tail-analyzed의 분석본을 특정 언어로 로컬라이즈하는 에이전트.
 
 ## 역할 범위
 
