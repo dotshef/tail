@@ -25,7 +25,13 @@
       "Bash(xargs grep:*)",
       "Read(//c/D/.claude/**)",
       "Bash(git log:*)",
-      "Bash(python generate-pdf.py jp \"여우와 두루미\")"
+      "Bash(python generate-pdf.py jp \"여우와 두루미\")",
+      "Bash(wc -l c:/D/tail/difficulty-voca/*.csv)",
+      "Bash(python -c \"import konlpy; print\\(konlpy.__version__\\)\")",
+      "Bash(python -c \"from kiwipiepy import Kiwi; kiwi = Kiwi\\(\\); result = kiwi.tokenize\\('능글맞은 미소를 지으며 말했다'\\); print\\([\\(t.form, t.tag\\) for t in result]\\)\")",
+      "Bash(pip list:*)",
+      "Bash(python generate-images.py)",
+      "Bash(python -c ':*)"
     ],
     "deny": [
       "Read(./.env)",
@@ -34,7 +40,8 @@
     ],
     "additionalDirectories": [
       "c:\\D\\tail\\.claude\\skills",
-      "c:\\D\\tail\\tail-pdf\\en"
+      "c:\\D\\tail\\tail-pdf\\en",
+      "c:\\D\\tail\\tail-analyzing-test"
     ]
   }
 }
