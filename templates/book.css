@@ -6,7 +6,7 @@
 @page {
   size: A5;
   /* Default margins for story pages */
-  margin: 10mm 18mm 18mm 18mm;
+  margin: 10mm 18mm 14mm 18mm;
 }
 
 /* Cover page (always page 1): full bleed, no margin */
@@ -158,7 +158,7 @@ html, body {
 .story-page p {
   margin: 0;
   text-indent: 1em;
-  text-align: justify;
+  text-align: left;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -182,9 +182,9 @@ html, body {
 .expressions {
   margin-top: auto; /* flex: push to bottom of .story-page */
   padding-top: 3mm;
-  border-top: 0.3px solid #ccc;
+  border-top: 0.2px solid #ccc;
   font-size: 10px;
-  line-height: 1.5;
+  line-height: 1.4;
   color: #666;
 }
 
@@ -222,7 +222,6 @@ html, body {
   font-weight: 700;
   margin: 0 0 6mm 0;
   padding-bottom: 2mm;
-  border-bottom: 0.5px solid #bbb;
   color: #333;
   line-height: 1.3;
 }
@@ -230,7 +229,7 @@ html, body {
 .translation-page p {
   margin: 0;
   text-indent: 1em;
-  text-align: justify;
+  text-align: left;
   word-break: keep-all;
   overflow-wrap: break-word;
   font-size: 11px;

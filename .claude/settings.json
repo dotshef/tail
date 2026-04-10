@@ -36,7 +36,9 @@
       "Bash(python -m pip install python-frontmatter markdown)",
       "Bash(python build-pdf.py:*)",
       "Bash(python c:/D/tail/build-pdf.py zh-tw \"여우와 두루미\")",
-      "Read(//c/D/tail/**)"
+      "Read(//c/D/tail/**)",
+      "Bash(python -X utf8 -c \"import json,sys; sys.stdout.reconfigure\\(encoding='utf-8'\\); d=json.load\\(open\\('c:/D/tail/tail-analyzed/여우와 두루미.vocab.json', encoding='utf-8'\\)\\); print\\('unregistered:', d['unregistered']\\)\")",
+      "Bash(python -c \"import os; d='c:/D/tail/tail-pdf/zh-tw'; [print\\(f, os.path.getsize\\(os.path.join\\(d,f\\)\\)\\) for f in os.listdir\\(d\\)]\")"
     ],
     "deny": [
       "Read(./.env)",
