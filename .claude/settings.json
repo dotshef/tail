@@ -31,7 +31,9 @@
       "Bash(python -c \"from kiwipiepy import Kiwi; kiwi = Kiwi\\(\\); result = kiwi.tokenize\\('능글맞은 미소를 지으며 말했다'\\); print\\([\\(t.form, t.tag\\) for t in result]\\)\")",
       "Bash(pip list:*)",
       "Bash(python generate-images.py)",
-      "Bash(python -c ':*)"
+      "Bash(python -c ':*)",
+      "Bash(python -X utf8 analyze-vocab.py \"tail-raw/여우와 두루미.md\")",
+      "Bash(python -X utf8 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'가중평균: {d[\\\\\"weighted_avg\\\\\"]}, vocabulary_level: {d[\\\\\"vocabulary_level\\\\\"]}'\\)\")"
     ],
     "deny": [
       "Read(./.env)",

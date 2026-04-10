@@ -1,9 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-어휘 난이도 분석 스크립트
-- 동화 마크다운에서 형태소를 추출하고 TOPIK CSV와 대조한다.
-- 사용법: python -X utf8 analyze-vocab.py <입력파일>
-- 출력: JSON (stdout)
+어휘 난이도 분석 스크립트 (analyze-vocab.py)
+
+역할:
+  동화 마크다운의 어휘를 TOPIK 급수 기준으로 분석하여 vocabulary_level을 산출한다.
+  LLM 에이전트가 직접 판단할 때 발생하는 결과 편차를 제거하기 위해,
+  같은 입력에 대해 항상 동일한 JSON을 출력하는 결정적 스크립트이다.
+
+동작 흐름:
+  1. 텍스트 추출    — 마크다운에서 frontmatter, 주석, 이미지, 헤딩, 대사 태그 제거
+  2. 형태소 분석    — kiwipiepy로 명사/동사/형용사/부사/어근 추출 (용언은 기본형 변환)
+  3. CSV 사전 로드  — difficulty-voca/TOPIK_{1-6}_words.csv 로드, 동음이의어/슬래시 정규화
+  4. 대조           — 정확/부분 매칭으로 등재·미등재 분리
+  5. 가중 평균 계산 — 각 단어의 급수(미등재=5급)를 점수로 평균, 반올림하여 레벨 결정
+
+가중 평균 → vocabulary_level 변환:
+  < 1.5 → 1   |  1.5~2.5 → 2  |  2.5~3.5 → 3
+  3.5~4.5 → 4 |  4.5~5.5 → 5  |  5.5+   → 6
+
+사용법:
+  python -X utf8 analyze-vocab.py "<입력파일.md>"
+
+출력(JSON, stdout):
+  {
+    "total_words", "registered_count", "unregistered_count",
+    "unregistered_ratio", "weighted_avg", "vocabulary_level",
+    "level_distribution", "registered", "unregistered"
+  }
+
+의존성: kiwipiepy (순수 C++ 기반 한국어 형태소 분석기)
 """
 
 import sys
@@ -152,11 +177,31 @@ def main():
         key = f'{level}급'
         level_dist[key] = level_dist.get(key, 0) + 1
 
+    # 5. 가중 평균 계산 (미등재 = 5급 취급)
+    level_sum = sum(level for level in registered.values()) + len(unregistered) * 5
+    weighted_avg = round(level_sum / total, 1) if total > 0 else 0
+
+    # 가중 평균 → vocabulary_level 변환 (반올림 기반)
+    if weighted_avg < 1.5:
+        vocab_level = 1
+    elif weighted_avg < 2.5:
+        vocab_level = 2
+    elif weighted_avg < 3.5:
+        vocab_level = 3
+    elif weighted_avg < 4.5:
+        vocab_level = 4
+    elif weighted_avg < 5.5:
+        vocab_level = 5
+    else:
+        vocab_level = 6
+
     result = {
         'total_words': total,
         'registered_count': len(registered),
         'unregistered_count': len(unregistered),
         'unregistered_ratio': round(len(unregistered) / total * 100, 1) if total > 0 else 0,
+        'weighted_avg': weighted_avg,
+        'vocabulary_level': vocab_level,
         'level_distribution': level_dist,
         'registered': {w: f'{l}급' for w, l in sorted(registered.items(), key=lambda x: x[1])},
         'unregistered': sorted(unregistered),
