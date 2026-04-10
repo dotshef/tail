@@ -20,12 +20,10 @@
       "Edit(/.claude/skills/pdf-generator/**)",
       "Bash(node -e \"require\\('puppeteer'\\)\")",
       "Bash(playwright install:*)",
-      "Bash(python generate-pdf.py en \"여우와 두루미\")",
       "Bash(grep -E \"\\\\.\\(js|ts|py|json|config\\)$\")",
       "Bash(xargs grep:*)",
       "Read(//c/D/.claude/**)",
       "Bash(git log:*)",
-      "Bash(python generate-pdf.py jp \"여우와 두루미\")",
       "Bash(wc -l c:/D/tail/difficulty-voca/*.csv)",
       "Bash(python -c \"import konlpy; print\\(konlpy.__version__\\)\")",
       "Bash(python -c \"from kiwipiepy import Kiwi; kiwi = Kiwi\\(\\); result = kiwi.tokenize\\('능글맞은 미소를 지으며 말했다'\\); print\\([\\(t.form, t.tag\\) for t in result]\\)\")",
@@ -33,7 +31,10 @@
       "Bash(python generate-images.py)",
       "Bash(python -c ':*)",
       "Bash(python -X utf8 analyze-vocab.py \"tail-raw/여우와 두루미.md\")",
-      "Bash(python -X utf8 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'가중평균: {d[\\\\\"weighted_avg\\\\\"]}, vocabulary_level: {d[\\\\\"vocabulary_level\\\\\"]}'\\)\")"
+      "Bash(python -X utf8 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'가중평균: {d[\\\\\"weighted_avg\\\\\"]}, vocabulary_level: {d[\\\\\"vocabulary_level\\\\\"]}'\\)\")",
+      "Bash(python -c \"import markdown, frontmatter; print\\('ok'\\)\")",
+      "Bash(python -m pip install python-frontmatter markdown)",
+      "Bash(python build-pdf.py:*)"
     ],
     "deny": [
       "Read(./.env)",

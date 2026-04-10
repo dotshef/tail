@@ -1,3 +1,9 @@
+---
+name: difficulty-analyzer
+description: tail-raw 동화 마크다운과 vocab-analyzer가 생성한 vocab JSON을 읽고 외국인 한국어 학습자 기준으로 난이도(어휘/문법/문장길이/문화)를 판정하여 tail-analyzed/{스토리명}.md에 frontmatter + 페이지별 expressions 주석을 추가해 저장한다. vocab-analyzer 완료 이후에 사용한다.
+tools: Read, Write
+---
+
 # Difficulty Analyzer Agent
 
 tail-raw의 동화 마크다운을 읽고 외국인 한국어 학습자 기준으로 난이도를 분석하여 tail-analyzed에 저장하는 에이전트.

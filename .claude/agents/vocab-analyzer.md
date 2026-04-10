@@ -1,3 +1,9 @@
+---
+name: vocab-analyzer
+description: tail-raw의 동화 마크다운에 analyze-vocab.py를 실행하여 어휘 분석 JSON을 tail-analyzed/{스토리명}.vocab.json에 저장한다. difficulty-analyzer가 호출되기 전에 어휘 레벨링이 필요할 때 사용한다.
+tools: Bash, Read, Write
+---
+
 # Vocab Analyzer Agent
 
 tail-raw의 동화 마크다운에 대해 `analyze-vocab.py`를 실행하여 어휘 분석 JSON을 생성하는 에이전트.

@@ -1,3 +1,9 @@
+---
+name: book-editor
+description: tail-story와 tail-localized를 조합하여 최종 책 형식(bookform)을 tail-bookform/{lang}/{스토리명}.md에 생성한다. 번역본과 스토리를 합쳐 책 레이아웃으로 묶어야 할 때 사용한다.
+tools: Read, Write, Glob
+---
+
 # Book Editor Agent
 
 tail-story와 tail-localized을 조합하여 최종 책 형식(bookform)을 생성하는 에이전트.
