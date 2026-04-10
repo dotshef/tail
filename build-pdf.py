@@ -19,10 +19,16 @@ import sys
 from pathlib import Path
 
 import frontmatter
+import yaml
 from playwright.sync_api import sync_playwright
 
 BASE = Path("c:/D/tail")
 TEMPLATES = BASE / "templates"
+
+DEFAULT_THEME = {
+    "primary": "#333333",
+    "background": "#ffffff",
+}
 
 
 # ---------- Parsing ----------
@@ -50,6 +56,10 @@ def parse_bookform(md_body: str) -> dict:
                         },
                         ...
                     ],
+                    "translation": {
+                        "title": str | None,  # translated chapter title
+                        "paragraphs": [str, ...],
+                    } | None,
                 },
                 ...
             ],
@@ -65,6 +75,7 @@ def parse_bookform(md_body: str) -> dict:
     current_chapter: dict | None = None
     current_page: dict | None = None
     in_expressions = False
+    in_translation = False
 
     def flush_page():
         nonlocal current_page
@@ -82,6 +93,29 @@ def parse_bookform(md_body: str) -> dict:
     while i < n:
         line = lines[i]
         stripped = line.strip()
+
+        # Translation block — chapter-level, not tied to a page
+        if in_translation:
+            if stripped.startswith("-->"):
+                in_translation = False
+                i += 1
+                continue
+            if current_chapter is not None:
+                tr = current_chapter["translation"]
+                if tr["title"] is None and stripped.startswith("## "):
+                    tr["title"] = stripped[3:].strip()
+                elif stripped:
+                    tr["paragraphs"].append(stripped)
+            i += 1
+            continue
+
+        if stripped.startswith("<!-- translation"):
+            in_translation = True
+            flush_page()
+            if current_chapter is not None and current_chapter.get("translation") is None:
+                current_chapter["translation"] = {"title": None, "paragraphs": []}
+            i += 1
+            continue
 
         # Expressions block
         if in_expressions:
@@ -133,6 +167,7 @@ def parse_bookform(md_body: str) -> dict:
                 "title": ch_title,
                 "title_sub": ch_sub,
                 "pages": [],
+                "translation": None,
             }
             continue
 
@@ -188,7 +223,30 @@ def _to_file_uri(rel_or_abs: str) -> str:
     return p.resolve().as_uri()
 
 
+_FS_UNSAFE_RE = re.compile(r'[<>:"/\\|?*\x00-\x1f]')
+
+
+def sanitize_filename(name: str) -> str:
+    """Strip characters that are illegal in Windows/POSIX filenames."""
+    cleaned = _FS_UNSAFE_RE.sub("", name).strip().rstrip(".")
+    return cleaned
+
+
 # ---------- Rendering ----------
+
+
+def load_theme(story: str) -> dict:
+    """Load per-story theme from tail-image/{story}/theme.yaml.
+
+    Falls back to DEFAULT_THEME keys for missing entries.
+    """
+    theme_path = BASE / "tail-image" / story / "theme.yaml"
+    theme = dict(DEFAULT_THEME)
+    if theme_path.exists():
+        loaded = yaml.safe_load(theme_path.read_text(encoding="utf-8")) or {}
+        if isinstance(loaded, dict):
+            theme.update({k: v for k, v in loaded.items() if v})
+    return theme
 
 
 def render_html(book: dict, lang: str, story: str) -> str:
@@ -200,9 +258,18 @@ def render_html(book: dict, lang: str, story: str) -> str:
         cover_sub = f'<div class="cover-subtitle">{html.escape(book["title_sub"])}</div>'
 
     cover_img = ""
-    cover_path = BASE / "tail-image" / story / "cover.jpeg"
-    if cover_path.exists():
-        cover_img = f'<img src="{html.escape(cover_path.resolve().as_uri())}" alt="">'
+    cover_dir = BASE / "tail-image" / story
+    for ext in ("png", "jpeg", "jpg"):
+        cover_path = cover_dir / f"cover.{ext}"
+        if cover_path.exists():
+            cover_img = f'<img src="{html.escape(cover_path.resolve().as_uri())}" alt="">'
+            break
+
+    theme = load_theme(story)
+    theme_style = (
+        f"--theme-primary: {html.escape(str(theme['primary']))};"
+        f"--theme-background: {html.escape(str(theme['background']))};"
+    )
 
     content_parts: list[str] = []
     for idx, chapter in enumerate(book["chapters"], start=1):
@@ -215,6 +282,7 @@ def render_html(book: dict, lang: str, story: str) -> str:
         .replace("{{TITLE}}", title_esc)
         .replace("{{COVER_SUBTITLE}}", cover_sub)
         .replace("{{COVER_IMAGE}}", cover_img)
+        .replace("{{THEME_STYLE}}", theme_style)
         .replace("{{CONTENT}}", content)
     )
     return out
@@ -228,7 +296,24 @@ def render_chapter(chapter: dict, chapter_index: int) -> str:
         is_first = i == 0
         parts.append(render_page(page, chapter if is_first else None))
 
+    if chapter.get("translation"):
+        parts.append(render_translation(chapter["translation"]))
+
     parts.append("</section>")
+    return "\n".join(parts)
+
+
+def render_translation(translation: dict) -> str:
+    """Render a chapter's translation as a dedicated page."""
+    parts: list[str] = []
+    parts.append('  <article class="translation-page">')
+    if translation.get("title"):
+        parts.append(
+            f'    <h2 class="translation-title">{html.escape(translation["title"])}</h2>'
+        )
+    for para in translation["paragraphs"]:
+        parts.append(f"    <p>{html.escape(para)}</p>")
+    parts.append("  </article>")
     return "\n".join(parts)
 
 
@@ -294,24 +379,29 @@ def main() -> int:
     post = frontmatter.loads(src.read_text(encoding="utf-8"))
     book = parse_bookform(post.content)
 
+    # Use the localized subtitle (<sub> under the H1) as the output stem so that
+    # each language lands as e.g. "The Fox and the Crane.pdf" / "キツネとツル.pdf".
+    # Fall back to the Korean story name if no subtitle is present.
+    localized = sanitize_filename(book["title_sub"] or "")
+    stem = localized or story
+
     # Copy CSS next to the HTML so the relative <link> resolves
     shutil.copyfile(TEMPLATES / "book.css", out_dir / "book.css")
 
     html_out = render_html(book, lang, story)
-    html_path = out_dir / f"{story}.html"
+    html_path = out_dir / f"{stem}.html"
     html_path.write_text(html_out, encoding="utf-8")
     print(f"HTML generated: {html_path}")
 
-    pdf_path = out_dir / f"{story}.pdf"
-    pdf_tmp = out_dir / f"{story}.pdf.tmp"
+    pdf_path = out_dir / f"{stem}.pdf"
+    pdf_tmp = out_dir / f"{stem}.pdf.tmp"
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
         page.goto(html_path.as_uri(), wait_until="networkidle")
         page.pdf(
             path=str(pdf_tmp),
-            format="A5",
-            margin={"top": "20mm", "bottom": "20mm", "left": "18mm", "right": "18mm"},
+            prefer_css_page_size=True,  # honor @page size + @page :first { margin: 0 }
             print_background=True,
         )
         browser.close()

@@ -1,0 +1,5 @@
+# Per-book theme for 여우와 두루미
+# primary:    cover decoration color (line, title accents)
+# background: cover background color
+primary: "#8B0000"
+background: "#FAF3E0"
