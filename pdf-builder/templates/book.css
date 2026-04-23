@@ -1,0 +1,275 @@
+/* ============================================
+   Book PDF Stylesheet
+   A5 (148 × 210mm), single-side, serif body
+   ============================================ */
+
+@page {
+  size: A5;
+  /* Default margins for story pages */
+  margin: 10mm 18mm 14mm 18mm;
+}
+
+/* Cover page (always page 1): full bleed, no margin */
+@page :first {
+  margin: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Noto Serif KR', 'Batang', '바탕', serif;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Cover ----------
+   Cover uses @page :first { margin: 0 }, so it occupies the full A5
+   (148 × 210mm) with background extending to the physical edges.
+   Left inset is widened to 24mm to clear the 8mm series band pinned at
+   the left edge; right/top/bottom insets keep the original story-page inset. */
+.cover {
+  width: 148mm;
+  height: 210mm;
+  padding: 10mm 18mm 18mm 24mm;
+  page-break-after: always;
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background: var(--theme-background, #ffffff);
+  position: relative;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Left-edge vertical band carrying the series label (e.g. "Korean Graded Reader").
+   Text is anchored near the bottom of the band with glyph baselines on the right,
+   so the label reads naturally when the reader tilts their head to the left. */
+.cover-series-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 8mm;
+  background: #370a0c;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover-series-band span {
+  writing-mode: vertical-rl;
+  /* sideways → rotate CJK glyphs like Latin (baseline left, top-to-bottom).
+     rotate(180deg) flips the whole text so baselines move to the right side,
+     i.e. readable when the head is tilted left. */
+  text-orientation: sideways;
+  transform: rotate(180deg);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
+}
+
+.cover-top {
+  flex: 0 0 15%;
+}
+
+.cover-illustration {
+  flex: 0 0 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.cover-illustration img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.cover-title-block {
+  flex: 0 0 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 12mm; /* push centered content slightly upward */
+}
+
+.cover-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 5mm 0;
+  line-height: 1.2;
+}
+
+.cover-subtitle {
+  align-self: stretch; /* span full title-block width so the rule length is language-independent */
+  font-size: 18px;
+  font-weight: 400;
+  color: inherit;
+  font-style: normal;
+  line-height: 1.2;
+}
+
+/* Thin full-width rule between Korean title and localized subtitle, matching the series band color. */
+.cover-subtitle::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #370a0c;
+  margin: 0 0 5mm 0;
+}
+
+/* ---------- Chapter heading (absolutely positioned in the 14mm top strip) ---------- */
+.chapter-heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14mm;
+  margin: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.chapter-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.chapter-subtitle {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  font-style: normal;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+/* ---------- Story page (one physical A5 page) ----------
+   Total content box = 182mm (A5 height 210 - 10 top - 18 bottom).
+   padding-top: 14mm reserves a fixed chapter-heading strip on every page.
+   Body flex area is therefore always 168mm regardless of chapter presence. */
+.story-page {
+  page-break-before: always;
+  break-before: page;
+  min-height: 182mm;
+  padding-top: 14mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* The very first story-page follows the cover break — no extra break */
+.chapter:first-of-type > .story-page:first-of-type {
+  page-break-before: auto;
+  break-before: auto;
+}
+
+.story-page img {
+  display: block;
+  width: 70%;
+  margin: 0 auto 6mm auto;
+}
+
+/* ---------- Body text ---------- */
+.story-page p {
+  margin: 0;
+  text-indent: 1em;
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.story-page p + p {
+  margin-top: 0.2em;
+}
+
+/* Inline <sub> override inside body: readable size, no italic */
+.story-page sub,
+.chapter sub,
+.cover sub {
+  font-size: 10px;
+  color: #666;
+  font-style: normal;
+  vertical-align: baseline;
+  line-height: 1.3;
+}
+
+/* ---------- Expressions (pinned to bottom of each story page) ---------- */
+.expressions {
+  margin-top: auto; /* flex: push to bottom of .story-page */
+  padding-top: 3mm;
+  border-top: 0.2px solid #ccc;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #666;
+}
+
+.expressions ul {
+  margin: 0;
+  padding-left: 1.2em;
+  list-style: none;
+}
+
+.expressions li {
+  margin: 0 0 2px 0;
+  text-indent: -1.2em;
+  padding-left: 1.2em;
+}
+
+.expressions li::before {
+  content: '· ';
+}
+
+/* ---------- Translation page (one per chapter, after the chapter's story pages) ---------- */
+.translation-page {
+  page-break-before: always;
+  break-before: page;
+  min-height: 182mm;
+  padding-top: 14mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #444;
+}
+
+.translation-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 6mm 0;
+  padding-bottom: 2mm;
+  color: #333;
+  line-height: 1.3;
+}
+
+.translation-page p {
+  margin: 0;
+  text-indent: 1em;
+  text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.translation-page p + p {
+  margin-top: 0.3em;
+}

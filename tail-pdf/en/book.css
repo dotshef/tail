@@ -27,20 +27,53 @@ html, body {
 /* ---------- Cover ----------
    Cover uses @page :first { margin: 0 }, so it occupies the full A5
    (148 × 210mm) with background extending to the physical edges.
-   Internal padding restores the 10/18mm inset used by non-cover pages
-   so flex children still layout inside 112 × 182mm. */
+   Left inset is widened to 24mm to clear the 8mm series band pinned at
+   the left edge; right/top/bottom insets keep the original story-page inset. */
 .cover {
   width: 148mm;
   height: 210mm;
-  padding: 10mm 18mm 18mm 18mm;
+  padding: 10mm 18mm 18mm 24mm;
   page-break-after: always;
   break-after: page;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   background: var(--theme-background, #ffffff);
+  position: relative;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+}
+
+/* Left-edge vertical band carrying the series label (e.g. "Korean Graded Reader").
+   Text is anchored near the bottom of the band with glyph baselines on the right,
+   so the label reads naturally when the reader tilts their head to the left. */
+.cover-series-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 8mm;
+  background: #370a0c;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cover-series-band span {
+  writing-mode: vertical-rl;
+  /* sideways → rotate CJK glyphs like Latin (baseline left, top-to-bottom).
+     rotate(180deg) flips the whole text so baselines move to the right side,
+     i.e. readable when the head is tilted left. */
+  text-orientation: sideways;
+  transform: rotate(180deg);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  white-space: nowrap;
 }
 
 .cover-top {
@@ -71,29 +104,30 @@ html, body {
   padding-bottom: 12mm; /* push centered content slightly upward */
 }
 
-/* Single accent line above the title — 60% width, theme-colored */
-.cover-title-block::before {
-  content: '';
-  display: block;
-  width: 60%;
-  height: 2px;
-  background: var(--theme-primary, #333);
-  margin-bottom: 5mm;
-}
-
 .cover-title {
   font-size: 32px;
   font-weight: 700;
-  margin: 0 0 8px 0;
+  margin: 0 0 5mm 0;
   line-height: 1.2;
 }
 
 .cover-subtitle {
+  align-self: stretch; /* span full title-block width so the rule length is language-independent */
   font-size: 18px;
   font-weight: 400;
-  color: #666;
+  color: inherit;
   font-style: normal;
   line-height: 1.2;
+}
+
+/* Thin full-width rule between Korean title and localized subtitle, matching the series band color. */
+.cover-subtitle::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #370a0c;
+  margin: 0 0 5mm 0;
 }
 
 /* ---------- Chapter heading (absolutely positioned in the 14mm top strip) ---------- */

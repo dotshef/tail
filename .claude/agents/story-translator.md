@@ -92,9 +92,9 @@ tail-story의 한국어 본문을 특정 언어로 번역하는 에이전트.
 <!-- translation
 In a village deep in the forest, a fox and a crane lived side by side as neighbors. The two would exchange greetings now and then, but they had never really grown close. One day, the fox came to visit the crane. With a sly little smile on his lips, he spoke.
 
-"Lady Crane, would you not come to my house for dinner tomorrow evening? I shall prepare a very special dish."
+"Miss Crane, would you come to my house for dinner tomorrow evening? I will prepare a very special dish."
 
-"Oh my, truly? Thank you so kindly, Master Fox. I shall certainly come."
+"Oh my, really? Thank you so much, Mr. Fox. I will certainly come."
 
 Delighted, the crane made her way home. But the fox, left alone, chuckled softly to himself.
 
@@ -114,13 +114,13 @@ From the very beginning, the fox had been scheming to make a fool of the crane.
 - 독백(작은따옴표로 감싼 속마음)은 대상 언어에서도 구분이 유지되도록 한다 (en: '...', zh-tw: 『...』, jp: 『...』)
 - 직역보다 **자연스러운 의역**을 선호하되, 등장인물·사건 순서·감정 흐름은 원문을 충실히 따른다
 - 의성어/의태어는 대상 언어의 자연스러운 표현으로 옮긴다 (킥킥→giggle, 실룩실룩→twitch 등)
-- 한국어 고유 호칭("여우 씨", "두루미 양")은 대상 언어 관습에 맞게 치환한다 (en: Mr. Fox / Miss Crane, jp: キツネさん / ツルさん)
+- 한국어 고유 호칭("여우 씨", "두루미 양")은 대상 언어의 **현대적이고 범용적인 경칭**으로 치환한다 (en: Mr. Fox / Miss Crane, zh-tw: 狐狸先生 / 鶴小姐, jp: キツネさん / ツルさん)
 - 페이지 본문 마지막 줄과 `<!-- translation` 사이에는 빈 줄 하나를 둔다
 - `-->` 와 다음 `###`(또는 `##`, 파일 끝) 사이에도 빈 줄 하나를 둔다
 
 ### 3. 용어 일관성
 
-한 스토리 안에서 반복 등장하는 인물 호칭·주요 명사·특징적 형용사는 **모든 페이지에서 동일한 역어**를 사용한다. 예를 들어 `여우 씨`를 1페이지에서 `Master Fox`로 옮겼다면, 끝까지 `Master Fox`로 유지한다. 페이지별로 역어가 바뀌면 학습자가 혼란스럽다.
+한 스토리 안에서 반복 등장하는 인물 호칭·주요 명사·특징적 형용사는 **모든 페이지에서 동일한 역어**를 사용한다. 예를 들어 `여우 씨`를 1페이지에서 `Mr. Fox`로 옮겼다면, 끝까지 `Mr. Fox`로 유지한다. 페이지별로 역어가 바뀌면 학습자가 혼란스럽다.
 
 번역을 시작하기 전 다음을 먼저 확정하고 작업에 들어간다:
 - `#` 제목의 역어

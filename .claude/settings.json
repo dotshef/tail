@@ -38,7 +38,11 @@
       "Bash(python c:/D/tail/build-pdf.py zh-tw \"여우와 두루미\")",
       "Read(//c/D/tail/**)",
       "Bash(python -X utf8 -c \"import json,sys; sys.stdout.reconfigure\\(encoding='utf-8'\\); d=json.load\\(open\\('c:/D/tail/tail-analyzed/여우와 두루미.vocab.json', encoding='utf-8'\\)\\); print\\('unregistered:', d['unregistered']\\)\")",
-      "Bash(python -c \"import os; d='c:/D/tail/tail-pdf/zh-tw'; [print\\(f, os.path.getsize\\(os.path.join\\(d,f\\)\\)\\) for f in os.listdir\\(d\\)]\")"
+      "Bash(python -c \"import os; d='c:/D/tail/tail-pdf/zh-tw'; [print\\(f, os.path.getsize\\(os.path.join\\(d,f\\)\\)\\) for f in os.listdir\\(d\\)]\")",
+      "Bash(python -X utf8 -c \"import json; d=json.load\\(open\\(r'c:/D/tail/tail-analyzed/여우와 두루미.vocab.json','r',encoding='utf-8'\\)\\); print\\('total:',d['total_words']\\); print\\('registered:',d['registered_count']\\); print\\('unregistered:',d['unregistered_count']\\); print\\('ratio:',d['unregistered_ratio']\\); print\\('levels:',d['level_distribution']\\); print\\('unreg sample:',d['unregistered'][:20]\\)\")",
+      "Bash(python pdf-builder/build-pdf.py zh-tw \"여우와 두루미\")",
+      "Bash(python pdf-builder/build-pdf.py jp \"여우와 두루미\")",
+      "Bash(python pdf-builder/build-pdf.py en \"여우와 두루미\")"
     ],
     "deny": [
       "Read(./.env)",
