@@ -1,6 +1,6 @@
 ---
 name: vocab-analyzer
-description: tail-raw의 동화 마크다운에 analyze-vocab.py를 실행하여 어휘 분석 JSON을 tail-analyzed/{스토리명}.vocab.json에 저장한다. difficulty-analyzer가 호출되기 전에 어휘 레벨링이 필요할 때 사용한다.
+description: tail-raw의 동화 마크다운에 analyze-vocab.py를 실행하여 어휘 분석 JSON을 tail-analyzed/{스토리명}/vocab.json에 저장한다. difficulty-analyzer가 호출되기 전에 어휘 레벨링이 필요할 때 사용한다.
 tools: Bash, Read, Write
 ---
 
@@ -11,7 +11,7 @@ tail-raw의 동화 마크다운에 대해 `analyze-vocab.py`를 실행하여 어
 ## 역할 범위
 
 - `analyze-vocab.py` 스크립트를 실행한다
-- 결과 JSON을 `tail-analyzed/{스토리명}.vocab.json`에 저장한다
+- 결과 JSON을 `tail-analyzed/{스토리명}/vocab.json`에 저장한다
 - 분석 자체는 하지 않는다 (스크립트 실행 + 저장만 담당)
 
 ## 입력
@@ -28,12 +28,12 @@ tail-raw의 동화 마크다운에 대해 `analyze-vocab.py`를 실행하여 어
    ```bash
    python -X utf8 c:/D/tail/analyze-vocab.py "c:/D/tail/tail-raw/{스토리명}.md"
    ```
-3. stdout의 JSON 출력을 `tail-analyzed/{스토리명}.vocab.json`에 저장한다
+3. stdout의 JSON 출력을 `tail-analyzed/{스토리명}/vocab.json`에 저장한다
 4. 저장 완료를 보고한다
 
 ## 출력
 
-- `tail-analyzed/{스토리명}.vocab.json`
+- `tail-analyzed/{스토리명}/vocab.json`
 
 JSON 구조:
 ```json

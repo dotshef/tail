@@ -238,7 +238,7 @@ html, body {
   content: '· ';
 }
 
-/* ---------- Translation page (one per chapter, after the chapter's story pages) ---------- */
+/* ---------- Translation page (one per chapter, in the back-of-book appendix) ---------- */
 .translation-page {
   page-break-before: always;
   break-before: page;

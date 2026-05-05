@@ -16,6 +16,7 @@ import html
 import re
 import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 import frontmatter
@@ -40,6 +41,8 @@ _EXPR_LINE_RE = re.compile(r"^\s*-\s+(.*)$")
 def parse_bookform(md_body: str) -> dict:
     """Parse bookform markdown into a structured tree.
 
+    Translations are book-level (appendix at the end), not attached to chapters.
+
     Structure:
         {
             "title": str,
@@ -56,12 +59,15 @@ def parse_bookform(md_body: str) -> dict:
                         },
                         ...
                     ],
-                    "translation": {
-                        "title": str | None,  # translated chapter title
-                        "paragraphs": [str, ...],
-                    } | None,
                 },
                 ...
+            ],
+            "translations": [
+                {
+                    "title": str | None,  # translated chapter title (e.g. "1. The Fox's Mischief")
+                    "paragraphs": [str, ...],
+                },
+                ...  # one entry per chapter, in chapter order
             ],
         }
     """
@@ -72,8 +78,10 @@ def parse_bookform(md_body: str) -> dict:
     title: str | None = None
     title_sub: str | None = None
     chapters: list[dict] = []
+    translations: list[dict] = []
     current_chapter: dict | None = None
     current_page: dict | None = None
+    current_translation: dict | None = None
     in_expressions = False
     in_translation = False
 
@@ -94,26 +102,27 @@ def parse_bookform(md_body: str) -> dict:
         line = lines[i]
         stripped = line.strip()
 
-        # Translation block — chapter-level, not tied to a page
+        # Translation block — book-level appendix; collected at end, rendered after all chapters
         if in_translation:
             if stripped.startswith("-->"):
                 in_translation = False
+                if current_translation is not None:
+                    translations.append(current_translation)
+                current_translation = None
                 i += 1
                 continue
-            if current_chapter is not None:
-                tr = current_chapter["translation"]
-                if tr["title"] is None and stripped.startswith("## "):
-                    tr["title"] = stripped[3:].strip()
+            if current_translation is not None:
+                if current_translation["title"] is None and stripped.startswith("## "):
+                    current_translation["title"] = stripped[3:].strip()
                 elif stripped:
-                    tr["paragraphs"].append(stripped)
+                    current_translation["paragraphs"].append(stripped)
             i += 1
             continue
 
         if stripped.startswith("<!-- translation"):
             in_translation = True
-            flush_page()
-            if current_chapter is not None and current_chapter.get("translation") is None:
-                current_chapter["translation"] = {"title": None, "paragraphs": []}
+            flush_chapter()  # translations live outside chapter scope
+            current_translation = {"title": None, "paragraphs": []}
             i += 1
             continue
 
@@ -167,7 +176,6 @@ def parse_bookform(md_body: str) -> dict:
                 "title": ch_title,
                 "title_sub": ch_sub,
                 "pages": [],
-                "translation": None,
             }
             continue
 
@@ -206,6 +214,7 @@ def parse_bookform(md_body: str) -> dict:
         "title": title or "",
         "title_sub": title_sub,
         "chapters": chapters,
+        "translations": translations,
     }
 
 
@@ -292,6 +301,9 @@ def render_html(book: dict, lang: str, story: str) -> str:
     for idx, chapter in enumerate(book["chapters"], start=1):
         content_parts.append(render_chapter(chapter, idx))
 
+    for translation in book.get("translations") or []:
+        content_parts.append(render_translation(translation))
+
     content = "\n".join(content_parts)
 
     out = (
@@ -314,15 +326,12 @@ def render_chapter(chapter: dict, chapter_index: int) -> str:
         is_first = i == 0
         parts.append(render_page(page, chapter if is_first else None))
 
-    if chapter.get("translation"):
-        parts.append(render_translation(chapter["translation"]))
-
     parts.append("</section>")
     return "\n".join(parts)
 
 
 def render_translation(translation: dict) -> str:
-    """Render a chapter's translation as a dedicated page."""
+    """Render a single chapter's translation as a dedicated page."""
     parts: list[str] = []
     parts.append('  <article class="translation-page">')
     if translation.get("title"):
@@ -380,18 +389,18 @@ def render_page(page: dict, chapter_header: dict | None) -> str:
 
 def main() -> int:
     if len(sys.argv) != 3:
-        print("Usage: python scripts/build-pdf.py <lang> <story_name>")
+        print("Usage: python pdf-builder/build-pdf.py <lang> <story_name>")
         return 1
 
     lang = sys.argv[1]
     story = sys.argv[2]
 
-    src = BASE / "tail-bookform" / lang / f"{story}.md"
+    src = BASE / "tail-bookform" / story / f"{story}_{lang}.md"
     if not src.exists():
         print(f"Error: {src} not found")
         return 1
 
-    out_dir = BASE / "tail-pdf" / lang
+    out_dir = BASE / "tail-pdf" / story
     out_dir.mkdir(parents=True, exist_ok=True)
 
     post = frontmatter.loads(src.read_text(encoding="utf-8"))
@@ -403,26 +412,28 @@ def main() -> int:
     localized = sanitize_filename(book["title_sub"] or "")
     stem = localized or story
 
-    # Copy CSS next to the HTML so the relative <link> resolves
-    shutil.copyfile(TEMPLATES / "book.css", out_dir / "book.css")
-
     html_out = render_html(book, lang, story)
-    html_path = out_dir / f"{stem}.html"
-    html_path.write_text(html_out, encoding="utf-8")
-    print(f"HTML generated: {html_path}")
-
     pdf_path = out_dir / f"{stem}.pdf"
     pdf_tmp = out_dir / f"{stem}.pdf.tmp"
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.goto(html_path.as_uri(), wait_until="networkidle")
-        page.pdf(
-            path=str(pdf_tmp),
-            prefer_css_page_size=True,  # honor @page size + @page :first { margin: 0 }
-            print_background=True,
-        )
-        browser.close()
+
+    # Render HTML + CSS in a temp dir; only the PDF lands in the output folder.
+    # book.css lives authoritatively at templates/book.css; we never persist a copy.
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        tmp = Path(tmp_dir)
+        shutil.copyfile(TEMPLATES / "book.css", tmp / "book.css")
+        html_path = tmp / f"{stem}.html"
+        html_path.write_text(html_out, encoding="utf-8")
+
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            page = browser.new_page()
+            page.goto(html_path.as_uri(), wait_until="networkidle")
+            page.pdf(
+                path=str(pdf_tmp),
+                prefer_css_page_size=True,  # honor @page size + @page :first { margin: 0 }
+                print_background=True,
+            )
+            browser.close()
 
     # Atomic swap to avoid Windows file-lock when the PDF is open in a viewer
     try:

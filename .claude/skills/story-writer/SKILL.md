@@ -22,7 +22,7 @@ description: tail-raw의 동화 마크다운에서 대사 태그를 제거하여
 
 ### 출력
 
-- `tail-story/{스토리명}.md`
+- `tail-story/{스토리명}/story.md`
 
 ## 동작
 
@@ -32,7 +32,7 @@ description: tail-raw의 동화 마크다운에서 대사 태그를 제거하여
 4. **story-writer 에이전트를 spawn한다**
    - 입력: 스토리명
    - 동작: raw를 읽고 대사 태그(`- 캐릭터:`)와 원작자를 제거
-   - 출력: `tail-story/{스토리명}.md`
+   - 출력: `tail-story/{스토리명}/story.md`
 5. 에이전트 완료 후 결과를 사용자에게 보고한다
 
 ## 병렬 실행

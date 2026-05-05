@@ -1,6 +1,6 @@
 ---
 name: story-writer
-description: tail-raw의 동화 마크다운에서 대사 태그와 원작자 줄을 제거하여 순수 스토리 형식으로 변환한 뒤 tail-story/{스토리명}.md에 저장한다. 원본을 책 본문 형태로 다듬어야 할 때 사용한다.
+description: tail-raw의 동화 마크다운에서 대사 태그와 원작자 줄을 제거하여 순수 스토리 형식으로 변환한 뒤 tail-story/{스토리명}/story.md에 저장한다. 원본을 책 본문 형태로 다듬어야 할 때 사용한다.
 tools: Read, Write
 ---
 
@@ -84,7 +84,7 @@ tail-raw의 동화 마크다운에서 대사 태그와 원작자를 제거하여
 
 ## 출력 포맷
 
-`tail-story/{스토리명}.md`에 저장한다. frontmatter는 포함하지 않는다 (raw에 있는 그대로).
+`tail-story/{스토리명}/story.md`에 저장한다. frontmatter는 포함하지 않는다 (raw에 있는 그대로).
 
 ## 주의사항
 

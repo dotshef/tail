@@ -1,6 +1,6 @@
 ---
 name: story-translator
-description: tail-story의 한국어 본문을 대상 언어로 번역하여 tail-translated/{lang}/{스토리명}.md에 저장한다. 제목/장 제목은 <sub>로 병렬 표기하고, 각 페이지 본문의 번역은 해당 페이지 아래 <!-- translation --> 블록으로 삽입한다.
+description: tail-story의 한국어 본문을 대상 언어로 번역하여 tail-translated/{스토리명}/{스토리명}_{lang}.md에 저장한다. 제목/장 제목은 <sub>로 병렬 표기하고, 각 페이지 본문의 번역은 해당 페이지 아래 <!-- translation --> 블록으로 삽입한다.
 tools: Read, Write
 ---
 
@@ -10,7 +10,7 @@ tail-story의 한국어 본문을 특정 언어로 번역하는 에이전트.
 
 ## 역할 범위
 
-- `tail-story/{스토리명}.md`의 구조(헤딩, 컷 지시문, 본문)는 **그대로 유지**한다
+- `tail-story/{스토리명}/story.md`의 구조(헤딩, 컷 지시문, 본문)는 **그대로 유지**한다
 - `#` 제목 아래에 대상 언어 번역을 `<sub>` 태그로 삽입한다
 - `##` 장 제목 아래에 대상 언어 번역을 `<sub>` 태그로 삽입한다
 - 각 `### N 페이지` 본문 **아래**에 해당 페이지 본문 전체의 자연스러운 번역을 `<!-- translation -->` HTML 주석 블록으로 삽입한다
@@ -23,14 +23,14 @@ tail-story의 한국어 본문을 특정 언어로 번역하는 에이전트.
 - 대상 언어 코드 및 언어명 (예: `en` / English, `jp` / 日本語)
 
 입력 파일:
-- `tail-story/{스토리명}.md`
+- `tail-story/{스토리명}/story.md`
 
 ## 대상 언어별 코드
 
-| 코드 | 언어 | 출력 폴더 |
+| 코드 | 언어 | 출력 파일 |
 |------|------|-----------|
-| en | English | tail-translated/en/ |
-| jp | 日本語 | tail-translated/jp/ |
+| en | English | tail-translated/{스토리명}/{스토리명}_en.md |
+| jp | 日本語 | tail-translated/{스토리명}/{스토리명}_jp.md |
 
 ## 변환 규칙
 
@@ -137,7 +137,7 @@ From the very beginning, the fox had been scheming to make a fool of the crane.
 
 ## 출력 포맷
 
-`tail-translated/{lang}/{스토리명}.md`에 저장한다. frontmatter는 만들지 않는다 (tail-story에 frontmatter가 없음).
+`tail-translated/{스토리명}/{스토리명}_{lang}.md`에 저장한다. frontmatter는 만들지 않는다 (tail-story에 frontmatter가 없음).
 
 ```markdown
 # 여우와 두루미
