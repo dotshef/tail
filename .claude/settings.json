@@ -43,7 +43,10 @@
       "mcp__claude_ai_Figma__generate_diagram",
       "Edit(/.claude/skills/story-translator/**)",
       "Edit(/.claude/skills/exercise-writer/**)",
-      "Edit(/.claude/skills/exercise-localizer/**)"
+      "Edit(/.claude/skills/exercise-localizer/**)",
+      "Bash(python -X utf8 c:/D/tail/analyze-vocab.py \"c:/D/tail/tail-raw/여우와 두루미.md\")",
+      "Bash(python -X utf8 -c \"import json; d=json.load\\(open\\(r'c:/D/tail/tail-analyzed/여우와 두루미.vocab.json', encoding='utf-8'\\)\\); print\\('total_words:', d['total_words']\\); print\\('registered_count:', d['registered_count']\\); print\\('unregistered_count:', d['unregistered_count']\\); print\\('unregistered_ratio:', d['unregistered_ratio']\\); print\\('level_distribution:', d['level_distribution']\\)\")",
+      "Bash(python -c \"import yaml; yaml.safe_load\\(\\\\\"explanation: '속셈' means a calculation or plan made in one's mind.\\\\\"\\)\")"
     ],
     "deny": [
       "Read(./.env)",

@@ -273,3 +273,216 @@ html, body {
 .translation-page p + p {
   margin-top: 0.3em;
 }
+
+/* ---------- Exercise page (one per chapter, between story and translation) ----------
+   Layout intent: students work through 5 questions per chapter on its own page,
+   then check their answers via the answer-key at book end. */
+.exercise-page {
+  page-break-before: always;
+  break-before: page;
+  min-height: 182mm;
+  padding-top: 14mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #222;
+}
+
+.exercise-title {
+  margin: 0 0 5mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--theme-primary, #333);
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.exercise-chapter-num {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--theme-primary, #333);
+  letter-spacing: 0.1em;
+}
+
+.exercise-chapter-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  margin-top: 1mm;
+}
+
+.exercise-section {
+  margin: 0 0 4mm 0;
+}
+
+.exercise-section + .exercise-section {
+  margin-top: 4mm;
+}
+
+.exercise-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--theme-primary, #555);
+  margin: 0 0 1.5mm 0;
+  padding-left: 1mm;
+  border-left: 2px solid var(--theme-primary, #555);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.exercise-list {
+  margin: 0;
+  padding-left: 6mm;
+  font-size: 10.5px;
+  line-height: 1.55;
+}
+
+.exercise-list > li {
+  margin: 0 0 3mm 0;
+  padding-left: 1mm;
+}
+
+.exercise-list > li::marker {
+  font-weight: 700;
+  color: var(--theme-primary, #333);
+}
+
+.exercise-q {
+  margin: 0 0 1mm 0;
+  text-indent: 0;
+  font-weight: 500;
+  word-break: keep-all;
+}
+
+.exercise-choices {
+  margin: 1mm 0 0 0;
+  padding-left: 5mm;
+  list-style: decimal;
+  color: #333;
+}
+
+.exercise-choices li {
+  margin: 0 0 0.5mm 0;
+  padding-left: 1mm;
+  word-break: keep-all;
+}
+
+.exercise-blank {
+  margin: 1mm 0 0 0;
+  text-indent: 0;
+  border-bottom: 0.5px solid #888;
+  height: 4mm;
+}
+
+.exercise-sentence {
+  margin: 1mm 0 0 0;
+  text-indent: 0;
+  word-break: keep-all;
+  background: #fafafa;
+  padding: 1mm 2mm;
+  border-left: 2px solid #ddd;
+}
+
+.exercise-pairs {
+  margin: 1mm 0 0 0;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 10px;
+}
+
+.exercise-pairs td {
+  padding: 0.5mm 1.5mm;
+  vertical-align: top;
+  word-break: keep-all;
+}
+
+.match-num {
+  width: 5mm;
+  color: #666;
+}
+
+.match-left {
+  width: 28mm;
+  font-weight: 500;
+}
+
+.match-right {
+  color: #444;
+}
+
+.exercise-base {
+  margin: 1mm 0 0 0;
+  text-indent: 0;
+  font-style: italic;
+  color: #444;
+}
+
+.exercise-pattern {
+  margin: 0.5mm 0 1mm 0;
+  text-indent: 0;
+  font-size: 9.5px;
+  color: #666;
+}
+
+.exercise-pattern .pattern {
+  font-weight: 700;
+  color: var(--theme-primary, #333);
+  font-style: normal;
+}
+
+/* ---------- Answer key (final page of the book, all chapters consolidated) ---------- */
+.answer-key {
+  page-break-before: always;
+  break-before: page;
+  min-height: 182mm;
+  padding-top: 14mm;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  color: #333;
+}
+
+.answer-key-title {
+  margin: 0 0 6mm 0;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--theme-primary, #333);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+.answer-key-chapter {
+  margin: 0 0 5mm 0;
+  break-inside: avoid;
+}
+
+.answer-key-chapter-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--theme-primary, #444);
+  margin: 0 0 2mm 0;
+  padding-left: 1mm;
+  border-left: 2px solid var(--theme-primary, #444);
+}
+
+.answer-list {
+  margin: 0;
+  padding-left: 6mm;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #222;
+}
+
+.answer-list li {
+  margin: 0 0 0.5mm 0;
+  padding-left: 1mm;
+  word-break: keep-all;
+}
+
+.answer-list li::marker {
+  color: #888;
+  font-weight: 500;
+}
