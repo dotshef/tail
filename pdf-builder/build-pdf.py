@@ -35,8 +35,6 @@ DEFAULT_THEME = {
 
 _IMG_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 _EXPR_LINE_RE = re.compile(r"^\s*-\s+(.*)$")
-_EXERCISES_OPEN_RE = re.compile(r"<!--\s*exercises:chapter-(\d+)")
-_SECTION_HEADER_RE = re.compile(r"^\s*\[(\w+)\]\s*$")
 
 
 def parse_bookform(md_body: str) -> dict:
@@ -58,11 +56,6 @@ def parse_bookform(md_body: str) -> dict:
                         },
                         ...
                     ],
-                    "exercises": {
-                        "comprehension": [item, ...],
-                        "vocabulary": [item, ...],
-                        "grammar": [item, ...],
-                    } | None,
                     "translation": {
                         "title": str | None,  # translated chapter title
                         "paragraphs": [str, ...],
@@ -70,10 +63,6 @@ def parse_bookform(md_body: str) -> dict:
                 },
                 ...
             ],
-            "answer_key": [
-                {"chapter": int, "answers": [{"n": int, "value": Any}, ...]},
-                ...
-            ] | None,
         }
     """
     lines = md_body.splitlines()
@@ -83,15 +72,10 @@ def parse_bookform(md_body: str) -> dict:
     title: str | None = None
     title_sub: str | None = None
     chapters: list[dict] = []
-    answer_key: list[dict] | None = None
     current_chapter: dict | None = None
     current_page: dict | None = None
     in_expressions = False
     in_translation = False
-    in_exercises = False
-    in_answer_key = False
-    exercises_buf: list[str] = []
-    answer_key_buf: list[str] = []
 
     def flush_page():
         nonlocal current_page
@@ -109,45 +93,6 @@ def parse_bookform(md_body: str) -> dict:
     while i < n:
         line = lines[i]
         stripped = line.strip()
-
-        # Answer-key block (book-level, must precede other block checks)
-        if in_answer_key:
-            if stripped.startswith("-->"):
-                in_answer_key = False
-                answer_key = _parse_answer_key_block(answer_key_buf)
-                answer_key_buf = []
-                i += 1
-                continue
-            answer_key_buf.append(line)
-            i += 1
-            continue
-
-        if stripped.startswith("<!-- answer-key"):
-            # Answer-key sits at the very end; flush any current chapter before parsing it
-            flush_chapter()
-            in_answer_key = True
-            i += 1
-            continue
-
-        # Exercises block
-        if in_exercises:
-            if stripped.startswith("-->"):
-                in_exercises = False
-                if current_chapter is not None:
-                    current_chapter["exercises"] = _parse_exercises_block(exercises_buf)
-                exercises_buf = []
-                i += 1
-                continue
-            exercises_buf.append(line)
-            i += 1
-            continue
-
-        m_ex = _EXERCISES_OPEN_RE.match(stripped)
-        if m_ex:
-            in_exercises = True
-            flush_page()
-            i += 1
-            continue
 
         # Translation block — chapter-level, not tied to a page
         if in_translation:
@@ -222,7 +167,6 @@ def parse_bookform(md_body: str) -> dict:
                 "title": ch_title,
                 "title_sub": ch_sub,
                 "pages": [],
-                "exercises": None,
                 "translation": None,
             }
             continue
@@ -262,94 +206,7 @@ def parse_bookform(md_body: str) -> dict:
         "title": title or "",
         "title_sub": title_sub,
         "chapters": chapters,
-        "answer_key": answer_key,
     }
-
-
-_KEY_VALUE_RE = re.compile(r"^(?P<prefix>\s*(?:-\s+)?[^\s:]+:\s+)(?P<value>.+?)\s*$")
-
-
-def _quote_safe_value(line: str) -> str:
-    """Re-wrap `key: value` lines so YAML parses any prose value as a single string.
-
-    Exercise content from LLMs frequently contains YAML-tripping characters in
-    free-form prose values:
-      - leading single/double quotes (`explanation: '속셈' means ...`)
-      - inline `: "..."` quotations (`explanation: ...the text: "..."`)
-      - leading dashes, colons, etc.
-
-    To dodge all of these uniformly, wrap every prose value in a double-quoted
-    YAML scalar (escaping internal `"` and `\\`). Skip values that are flow
-    collections (`[...]` / `{...}`) since those carry structured data and must
-    parse as YAML.
-    """
-    m = _KEY_VALUE_RE.match(line)
-    if not m:
-        return line
-    value = m.group("value")
-    if not value or value[0] in ("[", "{"):
-        return line
-    safe = value.replace("\\", "\\\\").replace('"', '\\"')
-    return m.group("prefix") + '"' + safe + '"'
-
-
-def _parse_exercises_block(lines: list[str]) -> dict:
-    """Parse the body of an `<!-- exercises:chapter-N ... -->` block.
-
-    Body uses YAML-like syntax with `[section]` headers (comprehension/vocabulary/grammar).
-    Convert headers to `section:` so the whole block parses as YAML directly,
-    and re-wrap values that start with a quote to dodge YAML's quoted-scalar trap.
-    """
-    converted: list[str] = []
-    for line in lines:
-        m = _SECTION_HEADER_RE.match(line)
-        if m:
-            converted.append(f"{m.group(1)}:")
-            continue
-        converted.append(_quote_safe_value(line))
-    text = "\n".join(converted)
-    parsed = yaml.safe_load(text) or {}
-    if not isinstance(parsed, dict):
-        return {}
-    return parsed
-
-
-def _parse_answer_key_block(lines: list[str]) -> list[dict]:
-    """Parse the body of an `<!-- answer-key ... -->` block.
-
-    Format:
-        chapter-1:
-          - 1: 2
-          - 2: 넓적하고 얕은 접시
-          ...
-        chapter-2:
-          ...
-
-    Returns a list ordered by chapter number:
-        [{"chapter": 1, "answers": [{"n": 1, "value": 2}, ...]}, ...]
-    """
-    text = "\n".join(lines)
-    parsed = yaml.safe_load(text) or {}
-    if not isinstance(parsed, dict):
-        return []
-
-    def chapter_num(key: str) -> int:
-        try:
-            return int(str(key).split("-")[-1])
-        except (ValueError, IndexError):
-            return 0
-
-    result: list[dict] = []
-    for key in sorted(parsed.keys(), key=chapter_num):
-        items = parsed[key] or []
-        answers: list[dict] = []
-        if isinstance(items, list):
-            for item in items:
-                if isinstance(item, dict):
-                    for k, v in item.items():
-                        answers.append({"n": k, "value": v})
-        result.append({"chapter": chapter_num(key), "answers": answers})
-    return result
 
 
 def _extract_sub(line: str) -> str | None:
@@ -407,36 +264,6 @@ def load_series(lang: str) -> str:
     return str(loaded.get(lang) or "")
 
 
-_DEFAULT_LABELS = {
-    "exercise_title": "Chapter {n}",
-    "comprehension": "Comprehension",
-    "vocabulary": "Vocabulary",
-    "grammar": "Grammar",
-    "answer_key_title": "Answer Key",
-    "chapter_label": "Chapter {n}",
-}
-
-
-def load_labels(lang: str) -> dict:
-    """Return UI labels for the given language.
-
-    Source: templates/labels.yaml (language-keyed dicts).
-    Missing language or missing keys fall back to English defaults so the build
-    still produces something readable.
-    """
-    path = TEMPLATES / "labels.yaml"
-    labels = dict(_DEFAULT_LABELS)
-    if not path.exists():
-        return labels
-    loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    if not isinstance(loaded, dict):
-        return labels
-    lang_labels = loaded.get(lang)
-    if isinstance(lang_labels, dict):
-        labels.update({k: v for k, v in lang_labels.items() if isinstance(v, str)})
-    return labels
-
-
 def render_html(book: dict, lang: str, story: str) -> str:
     tpl = (TEMPLATES / "book.html").read_text(encoding="utf-8")
 
@@ -460,14 +287,10 @@ def render_html(book: dict, lang: str, story: str) -> str:
     )
 
     series_text = html.escape(load_series(lang))
-    labels = load_labels(lang)
 
     content_parts: list[str] = []
     for idx, chapter in enumerate(book["chapters"], start=1):
-        content_parts.append(render_chapter(chapter, idx, labels))
-
-    if book.get("answer_key"):
-        content_parts.append(render_answer_key(book["answer_key"], labels))
+        content_parts.append(render_chapter(chapter, idx))
 
     content = "\n".join(content_parts)
 
@@ -483,16 +306,13 @@ def render_html(book: dict, lang: str, story: str) -> str:
     return out
 
 
-def render_chapter(chapter: dict, chapter_index: int, labels: dict) -> str:
+def render_chapter(chapter: dict, chapter_index: int) -> str:
     parts: list[str] = []
     parts.append(f'<section class="chapter" data-chapter="{chapter_index}">')
 
     for i, page in enumerate(chapter["pages"]):
         is_first = i == 0
         parts.append(render_page(page, chapter if is_first else None))
-
-    if chapter.get("exercises"):
-        parts.append(render_exercises(chapter["exercises"], chapter, chapter_index, labels))
 
     if chapter.get("translation"):
         parts.append(render_translation(chapter["translation"]))
@@ -512,126 +332,6 @@ def render_translation(translation: dict) -> str:
     for para in translation["paragraphs"]:
         parts.append(f"    <p>{html.escape(para)}</p>")
     parts.append("  </article>")
-    return "\n".join(parts)
-
-
-_SECTION_ORDER = ("comprehension", "vocabulary", "grammar")
-
-
-def render_exercises(
-    exercises: dict, chapter: dict, chapter_index: int, labels: dict
-) -> str:
-    """Render a chapter's exercises as a dedicated page.
-
-    Question numbering is 1..N continuous across sections within the chapter,
-    matching the answer-key indexing.
-    """
-    parts: list[str] = []
-    parts.append('  <article class="exercise-page">')
-
-    title_label = labels["exercise_title"].format(n=chapter_index)
-    chapter_name = chapter.get("title_sub") or chapter["title"]
-    parts.append(
-        f'    <h2 class="exercise-title">'
-        f'<span class="exercise-chapter-num">{html.escape(title_label)}</span>'
-        f'<span class="exercise-chapter-name">{html.escape(chapter_name)}</span>'
-        f'</h2>'
-    )
-
-    q_index = 0
-    for section_key in _SECTION_ORDER:
-        items = exercises.get(section_key)
-        if not items:
-            continue
-        label = labels.get(section_key, section_key)
-        parts.append(f'    <section class="exercise-section" data-section="{section_key}">')
-        parts.append(f'      <h3 class="exercise-section-title">{html.escape(label)}</h3>')
-        parts.append('      <ol class="exercise-list">')
-        for item in items:
-            q_index += 1
-            parts.append(_render_exercise_item(item, q_index))
-        parts.append('      </ol>')
-        parts.append('    </section>')
-
-    parts.append('  </article>')
-    return "\n".join(parts)
-
-
-def _render_exercise_item(item: dict, q_index: int) -> str:
-    t = str(item.get("type", ""))
-    parts: list[str] = []
-    parts.append(f'        <li value="{q_index}">')
-
-    q = item.get("q")
-    if q:
-        parts.append(f'          <p class="exercise-q">{html.escape(str(q))}</p>')
-
-    if t == "choice":
-        choices = item.get("choices", []) or []
-        parts.append('          <ol class="exercise-choices">')
-        for c in choices:
-            parts.append(f"            <li>{html.escape(str(c))}</li>")
-        parts.append('          </ol>')
-    elif t == "short" or t == "inference":
-        parts.append('          <p class="exercise-blank">&nbsp;</p>')
-    elif t == "fill" or t == "complete":
-        sentence = item.get("sentence", "")
-        parts.append(f'          <p class="exercise-sentence">{html.escape(str(sentence))}</p>')
-    elif t == "match":
-        pairs = item.get("pairs", []) or []
-        parts.append('          <table class="exercise-pairs"><tbody>')
-        for idx, pair in enumerate(pairs, start=1):
-            if isinstance(pair, dict):
-                for left, right in pair.items():
-                    parts.append(
-                        f'            <tr>'
-                        f'<td class="match-num">{idx})</td>'
-                        f'<td class="match-left">{html.escape(str(left))}</td>'
-                        f'<td class="match-right">{html.escape(str(right))}</td>'
-                        f'</tr>'
-                    )
-        parts.append('          </tbody></table>')
-    elif t == "transform":
-        base = item.get("base", "")
-        pattern = item.get("target_pattern", "")
-        parts.append(f'          <p class="exercise-base">{html.escape(str(base))}</p>')
-        parts.append(
-            f'          <p class="exercise-pattern">→ <span class="pattern">{html.escape(str(pattern))}</span></p>'
-        )
-        parts.append('          <p class="exercise-blank">&nbsp;</p>')
-    elif t == "usage":
-        parts.append('          <p class="exercise-blank">&nbsp;</p>')
-
-    parts.append("        </li>")
-    return "\n".join(parts)
-
-
-def render_answer_key(answer_key: list[dict], labels: dict) -> str:
-    """Render the consolidated answer key as the final page of the book."""
-    parts: list[str] = []
-    parts.append('<article class="answer-key">')
-    parts.append(
-        f'  <h2 class="answer-key-title">{html.escape(labels["answer_key_title"])}</h2>'
-    )
-    for ch in answer_key:
-        chapter_title = labels["chapter_label"].format(n=ch["chapter"])
-        parts.append('  <section class="answer-key-chapter">')
-        parts.append(
-            f'    <h3 class="answer-key-chapter-title">{html.escape(chapter_title)}</h3>'
-        )
-        parts.append('    <ol class="answer-list">')
-        for ans in ch["answers"]:
-            v = ans["value"]
-            if isinstance(v, list):
-                v_str = ", ".join(str(x) for x in v)
-            else:
-                v_str = str(v)
-            parts.append(
-                f'      <li value="{ans["n"]}">{html.escape(v_str)}</li>'
-            )
-        parts.append("    </ol>")
-        parts.append("  </section>")
-    parts.append("</article>")
     return "\n".join(parts)
 
 

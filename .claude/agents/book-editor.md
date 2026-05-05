@@ -1,21 +1,19 @@
 ---
 name: book-editor
-description: tail-story, tail-localized, tail-translated, tail-exercises-localized를 조합하여 최종 책 형식(bookform)을 tail-bookform/{lang}/{스토리명}.md에 생성한다. 스토리 본문·expression·연습 문제·번역을 하나의 책 레이아웃으로 묶어야 할 때 사용한다.
+description: tail-story, tail-localized, tail-translated를 조합하여 최종 책 형식(bookform)을 tail-bookform/{lang}/{스토리명}.md에 생성한다. 스토리 본문·expression·번역을 하나의 책 레이아웃으로 묶어야 할 때 사용한다.
 tools: Read, Write, Glob
 ---
 
 # Book Editor Agent
 
-tail-story·tail-localized·tail-translated·tail-exercises-localized 네 소스를 조합하여 최종 책 형식(bookform)을 생성하는 에이전트.
+tail-story·tail-localized·tail-translated 세 소스를 조합하여 최종 책 형식(bookform)을 생성하는 에이전트.
 
 ## 역할 범위
 
 - story의 본문을 그대로 가져온다
 - translated에서 `#`/`##` 제목의 `<sub>` 병렬 표기를 가져와 끼워넣는다
 - localized에서 `<!-- expressions -->` 블록을 가져와 각 페이지 끝에 끼워넣는다
-- exercises-localized에서 `<!-- exercises:chapter-N -->` 블록을 가져와 해당 장의 마지막 페이지 expressions 뒤에 끼워넣는다
-- translated에서 각 페이지의 `<!-- translation -->` 블록을 가져와 **장 단위로 병합**하여 exercises 블록 뒤에 끼워넣는다
-- 모든 장의 정답을 모아 책 마지막에 `<!-- answer-key -->` 블록을 추가한다
+- translated에서 각 페이지의 `<!-- translation -->` 블록을 가져와 **장 단위로 병합**하여 해당 장의 마지막 페이지 expressions 뒤에 끼워넣는다
 - 컷 지시문을 이미지 참조로 교체한다
 - frontmatter는 localized의 `difficulty` 블록만 가져온다
 - 새로운 문장을 창작하지 않는다
@@ -30,7 +28,6 @@ tail-story·tail-localized·tail-translated·tail-exercises-localized 네 소스
 - `tail-story/{스토리명}.md` — 한국어 본문 소스
 - `tail-localized/{lang}/{스토리명}.md` — expressions 및 frontmatter 소스
 - `tail-translated/{lang}/{스토리명}.md` — `<sub>` 병렬 표기 및 페이지별 `<!-- translation -->` 블록 소스
-- `tail-exercises-localized/{lang}/{스토리명}.md` — 장별 `<!-- exercises:chapter-N -->` 블록 소스
 
 ## 조합 규칙
 
@@ -91,31 +88,39 @@ tail-story에는 컷 지시문이 없다 (story-writer가 이미 제거함). boo
 
 `### N 페이지 (N단어)` 헤딩은 그대로 유지한다.
 
-### 6. `<!-- exercises:chapter-N -->` 삽입 (tail-exercises-localized에서 가져옴)
+### 6. `<!-- translation -->` 집약 삽입 (tail-translated에서 가져와 장 단위로 병합)
 
-`tail-exercises-localized/{lang}/{스토리명}.md`에서 장별 `<!-- exercises:chapter-N ... -->` 블록을 가져와 bookform의 해당 장 **마지막 페이지 expressions 블록 뒤**, **translation 블록 앞**에 삽입한다.
-
-규칙:
-- 블록 키 `chapter-N`의 N은 본문 `## N. 장 제목`의 번호와 일치해야 한다 (불일치 시 에러 보고)
-- 블록 내용을 그대로 복사한다 (이미 학습자 안내 텍스트는 대상 언어로 번역된 상태)
-- 블록 전체는 해당 장 마지막 페이지 expressions 뒤에 빈 줄 하나를 두고 삽입한다
-- 블록과 뒤따르는 `<!-- translation -->` 블록 사이에도 빈 줄 하나를 둔다
-- 한 장에 exercises 블록이 없으면 (소스에 누락 시) 해당 장은 exercises 없이 진행하고 경고만 보고
-
-### 7. `<!-- translation -->` 집약 삽입 (tail-translated에서 가져와 장 단위로 병합)
-
-**핵심 규칙**: tail-translated는 `<!-- translation -->` 블록을 **페이지 단위로** 가지고 있지만, bookform에서는 **장 단위로 하나의 블록**으로 병합한다. 위치는 해당 장의 **exercises 블록 뒤, 다음 `##` 직전**.
-
-학습 흐름 의도: 본문(expressions 포함) → exercises(직접 풀이) → translation(답 검증·이해 확인) → 다음 장.
+**핵심 규칙**: tail-translated는 `<!-- translation -->` 블록을 **페이지 단위로** 가지고 있지만, bookform에서는 **장 단위로 하나의 블록**으로 병합한다.
 
 절차:
 1. 각 장(`##`)에 속한 모든 페이지의 `<!-- translation ... -->` 블록을 tail-translated에서 읽는다
 2. 읽은 페이지 번역들을 **페이지 순서대로** 이어붙인다
 3. 병합된 번역의 최상단에 해당 장 제목을 `## {장 번호와 번역된 장 제목}` 형식으로 붙인다 — 장 제목 번역은 tail-translated의 해당 `##` 아래 `<sub>` 태그에서 가져온다
-4. 병합된 결과를 해당 장 **exercises 블록 뒤**, 다음 `##` 직전에 하나의 `<!-- translation ... -->` 블록으로 삽입한다
+4. 병합된 결과를 해당 장 **마지막 페이지의 expressions 블록 뒤**, 다음 `##` 직전에 하나의 `<!-- translation ... -->` 블록으로 삽입한다
 5. 페이지 간 번역 사이에는 빈 줄 하나를 두어 문단 경계를 유지한다
 
 예시 (en, 1장에 페이지 1~3이 속한 경우):
+
+tail-translated 상태:
+```markdown
+### 1 페이지 (77단어)
+...본문...
+<!-- translation
+Page 1 prose translation...
+-->
+
+### 2 페이지 (53단어)
+...본문...
+<!-- translation
+Page 2 prose translation...
+-->
+
+### 3 페이지 (93단어)
+...본문...
+<!-- translation
+Page 3 prose translation...
+-->
+```
 
 bookform 출력 (1장 마지막 페이지 뒤):
 ```markdown
@@ -127,15 +132,6 @@ bookform 출력 (1장 마지막 페이지 뒤):
 
 <!-- expressions
 - 실룩실룩: [adv.] ...
--->
-
-<!-- exercises:chapter-1
-[comprehension]
-- type: choice
-  q: What was the fox's real reason for inviting the crane?
-  choices: [친해지려고, 놀리려고, 요리를 자랑하려고, 사과하려고]
-  answer: 2
-...
 -->
 
 <!-- translation
@@ -159,36 +155,10 @@ Page 3 prose translation...
 - 그 아래에 해당 장 모든 페이지의 `<!-- translation -->` 내용(페이지별 프롬프트는 제거)을 **페이지 순서대로** 이어붙인다
 - 페이지 번역 사이에는 빈 줄 하나를 둔다
 - 페이지 헤딩·컷 지시문·expressions는 병합된 블록에 포함하지 않는다
-- 블록 전체는 해당 장 exercises 블록 뒤에 빈 줄 하나를 두고 삽입한다
+- 블록 전체는 해당 장 마지막 페이지 expressions 뒤에 빈 줄 하나를 두고 삽입한다
 - 블록과 다음 `##` 사이에도 빈 줄 하나를 둔다
 
-### 8. `<!-- answer-key -->` 책 끝 삽입 (모든 장의 정답 집약)
-
-각 장의 exercises 블록에서 `answer` 필드를 모아 책 **맨 끝**에 단일 `<!-- answer-key -->` 블록으로 삽입한다.
-
-포맷:
-```markdown
-<!-- answer-key
-chapter-1:
-  - 1: 2
-  - 2: 넓적하고 얕은 접시
-  - 3: 속셈
-  - 4: [1-1, 2-2, 3-3, 4-4]
-  - 5: 부리 끝이 수프에 닿을 뿐이다.
-chapter-2:
-  - 1: 3
-  - 2: 자기가 남에게 한 짓이 그대로 자기에게 돌아온다는 것
-  ...
--->
-```
-
-규칙:
-- 각 chapter는 해당 장 exercises 블록의 문제 등장 순서대로 1부터 번호 매김
-- answer 값은 exercises 원본 그대로 복사 (선택지 인덱스, 단답, 변환 결과, 페어 매칭 등)
-- explanation은 정답 키에 포함하지 않는다 (exercises 블록에 이미 들어 있음)
-- 책 마지막 장의 translation 블록 뒤에 빈 줄 하나를 두고 삽입한다 (파일 맨 끝)
-
-### 9. Frontmatter
+### 7. Frontmatter
 
 `tail-localized/{lang}/{스토리명}.md`에서 `difficulty` 블록만 가져온다.
 
@@ -260,15 +230,6 @@ difficulty:
 ...
 -->
 
-<!-- exercises:chapter-1
-[comprehension]
-- type: choice
-  q: What was the fox's real reason for inviting the crane?
-  choices: [친해지려고, 놀리려고, 요리를 자랑하려고, 사과하려고]
-  answer: 2
-...
--->
-
 <!-- translation
 ## 1. The Fox's Mischief
 
@@ -283,16 +244,6 @@ The crane brought her long beak to the dish...
 <sub>2. The Crane's Return</sub>
 
 ...
-
-<!-- answer-key
-chapter-1:
-  - 1: 2
-  - 2: 넓적하고 얕은 접시
-  ...
-chapter-2:
-  - 1: 3
-  ...
--->
 ```
 
 ## 주의사항
@@ -300,12 +251,8 @@ chapter-2:
 - story 본문의 텍스트는 절대 수정하지 않는다
 - tail-translated에서 가져오는 것은 `<sub>` 태그와 페이지별 `<!-- translation -->` 블록 내용뿐이다. 한국어 본문·컷 지시문·페이지 헤딩은 tail-translated에서 가져오지 않는다 (tail-story가 권위 있는 소스)
 - tail-localized에서 가져오는 것은 `<!-- expressions -->` 블록과 frontmatter의 `difficulty`뿐이다
-- tail-exercises-localized에서 가져오는 것은 장별 `<!-- exercises:chapter-N -->` 블록뿐이다 (이미 학습자 안내가 대상 언어로 번역된 상태)
 - 컷 내부의 빈 줄 규칙은 story의 형식을 그대로 따른다 (이미 정리되어 있음)
 - 이미지 참조와 본문 사이에는 빈 줄 하나를 둔다
-- expressions 블록과 다음 블록(exercises 또는 페이지/헤딩) 사이에는 빈 줄 하나를 둔다
-- 각 장 안에서 블록 순서는 **expressions → exercises → translation → (다음 `##`)** 으로 고정한다 — 학습 흐름: 읽기 → 풀기 → 답 검증
+- expressions 블록과 다음 이미지/헤딩 사이에도 빈 줄 하나를 둔다
 - `<!-- translation -->` 블록은 **장당 한 개**만 존재한다 — 페이지 단위로 분산 삽입하지 않는다
-- `<!-- exercises:chapter-N -->` 블록도 **장당 한 개**만 존재한다 — 블록 키의 N은 본문 `## N` 번호와 일치해야 한다
 - 장 제목 번역은 tail-translated의 `<sub>` 태그 내용과 **정확히 일치**해야 한다 (build-pdf.py가 이 두 소스를 매칭하지는 않지만 책 내 일관성 확보)
-- `<!-- answer-key -->` 블록은 책 **맨 끝에 한 개**만 존재한다 — 모든 장의 정답을 집약
