@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tail Image"
+  short_description: "Plan, generate, and review Tail story image assets."
+  default_prompt: "Create or review Tail story image assets from tail-raw markdown."
