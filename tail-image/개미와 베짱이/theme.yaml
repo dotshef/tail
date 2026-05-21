@@ -1,0 +1,5 @@
+# Per-book theme for 개미와 베짱이
+# primary: cover decoration color (line, title accents)
+# background: cover background color
+primary: "#7A3E2D"
+background: "#F5E9C7"

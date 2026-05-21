@@ -1,0 +1,120 @@
+{
+  "story": "개미와 베짱이",
+  "style_hint": "classic vintage children's storybook illustration in the Golden Books and vintage Disney storybook tradition, Alice and Martin Provensen style, Tibor Gergely Little Golden Books style, mid-century 1950s-60s storybook era, opaque painted illustration, loose painterly impressionistic execution, clean confident ink outlines on characters with flat painted shading and limited gradients, two-tone or three-tone color blocks instead of smooth digital gradients, painterly brushy hand-painted backgrounds, slightly aged vintage palette, naturalistic anthropomorphic animal proportions, small simple painted facial features without highlights or sparkle, clear emotional poses, bold but natural composition, warm nostalgic atmosphere, Korean graded reader fairy tale tone, seasonal Aesop fable spanning summer, autumn, and winter countryside fields. No text, no letters, no captions, no speech bubbles, no watermark",
+  "negative_prompt": "photorealistic, 3d render, anime, manga, comic panel, flat vector, plastic texture, glossy digital art, overly modern clothing, neon colors, dark horror mood, scary imagery, gore, large sparkling eyes, big shiny anime eyes, glossy eye highlights, sparkle in eyes, modern cute big-eye cartoon, chibi proportions, kawaii style, heavy gradient shading, soft airbrush rendering, smooth digital gradient, pixar-style 3d feel, contemporary digital children's book cute, text, letters, captions, speech bubbles, logo, watermark, signature",
+  "characters": {
+    "개미": "small sturdy anthropomorphic brown ant standing upright on two legs with naturalistic ant proportions, small simple painted eyes without highlight or sparkle, gentle determined expression, wearing a tiny straw hat and a simple beige work vest, two slender arms able to carry grain seeds larger than itself, six segmented body parts kept readable but stylized for a mid-century children's storybook",
+    "베짱이": "tall slender anthropomorphic green grasshopper standing upright with naturalistic grasshopper proportions, long thin limbs, simple painted slanted eyes without sparkle, easy carefree smile, wearing a small red scarf loosely around the neck, holding an old wooden violin and bow, musician-like posture",
+    "개미의 굴": "cozy round earthen burrow entrance set into a low grassy mound at the edge of the field, small wooden plank door, warm golden lamplight visible inside, neatly stacked piles of grain seeds glimpsed through the doorway"
+  },
+  "aspect_ratio": "4:3",
+  "cover": {
+    "prompt": "A single storybook cover composition with three seasonal vignettes softly blending across the scene: a golden summer field on the left, russet autumn grain stalks and falling leaves in the center, and gentle snow-dusted hills on the right. In the foreground a small sturdy brown anthropomorphic ant wearing a tiny straw hat and beige work vest carries a grain seed on its back with earnest determination, while a tall slender green anthropomorphic grasshopper with a small red scarf stands beside on a tuft of grass holding an old wooden violin and bow with a carefree smile. Warm vintage children's book composition centered for a book cover, no text or letters of any kind",
+    "mood": "warm, nostalgic, gently moral, classic Aesop fable storybook cover",
+    "key_details": [
+      "small brown ant with straw hat and work vest carrying a grain",
+      "tall green grasshopper with red scarf and wooden violin",
+      "three seasons blended across the background (summer, autumn, winter)",
+      "centered storybook cover composition"
+    ]
+  },
+  "cuts": [
+    {
+      "cut": 1,
+      "scene_label": "개미가 곡식 알갱이를 등에 지고 부지런히 걷는 장면",
+      "prompt": "A hot summer day on a golden grassy field beneath a bright sky. A small sturdy anthropomorphic brown ant wearing a tiny straw hat and beige work vest carries a grain seed bigger than its own body on its back, walking with effort along a sunlit dirt path. Tiny beads of sweat dot its forehead and its little face shows earnest determination. Tall grass blades and small wildflowers sway in the heat shimmer, and a cozy round earthen burrow entrance is visible at the edge of the field. Low angle composition emphasizing the ant's small but heroic effort, warm sunlit summer palette",
+      "mood": "earnest, hard-working summer warmth",
+      "key_details": [
+        "ant straining under a grain larger than its body",
+        "tiny beads of sweat",
+        "sunlit golden field",
+        "burrow entrance in the distance"
+      ]
+    },
+    {
+      "cut": 2,
+      "scene_label": "베짱이가 풀숲 그늘에서 바이올린을 켜며 개미에게 말을 거는 장면",
+      "prompt": "A cool shaded spot under tall meadow grass at midday. A tall slender anthropomorphic green grasshopper with a small red scarf sits cross-legged on a soft tuft of grass, playing an old wooden violin with a carefree musical smile. On the sunlit dirt path beyond the shade, the small brown ant in straw hat and work vest plods past carrying a heavy grain, sweating. The grasshopper waves one hand toward the ant, calling out cheerfully. Sunbeams break between grass blades, butterflies drift in the warm summer air",
+      "mood": "leisurely play contrasted with toil",
+      "key_details": [
+        "grasshopper playing violin in shade",
+        "ant carrying grain in the sun",
+        "shaded grass tuft with sunbeams",
+        "friendly wave gesture"
+      ]
+    },
+    {
+      "cut": 3,
+      "scene_label": "베짱이가 개미를 비웃으며 다시 바이올린을 켜는 장면",
+      "prompt": "Late afternoon on the same summer field, the sun sinking low and casting long golden shadows. The green grasshopper with red scarf reclines lazily on a curled leaf, smirking with playful mockery as it lifts the violin and bow to play again. Down on the dirt path below, the small brown ant in straw hat glances briefly upward with a calm patient expression then continues steadily toward its burrow with another grain on its back. A few leaves drift in the warm breeze, a clear sense of two different attitudes toward the same day",
+      "mood": "teasing mockery and quiet resolve",
+      "key_details": [
+        "grasshopper smirking on a curled leaf",
+        "ant glancing up then walking on",
+        "long golden late-afternoon shadows",
+        "burrow entrance ahead on the path"
+      ]
+    },
+    {
+      "cut": 4,
+      "scene_label": "개미가 가을 들판에서 낟알을 주워 굴속에 쌓는 장면",
+      "prompt": "A crisp autumn field, ripe wheat stalks bowed heavy with grain and red, orange, and yellow leaves drifting through the air. The small brown ant in straw hat and beige work vest carefully picks fallen grain kernels from the ground and carries them through the small wooden door of its cozy round earthen burrow. A cutaway hint of the burrow interior reveals neatly stacked piles of grain glowing in warm lamplight. The ant smiles contentedly yet keeps working diligently. Warm russet, amber, and golden palette",
+      "mood": "satisfying harvest and quiet diligence",
+      "key_details": [
+        "ant gathering fallen grain kernels",
+        "stacked grain visible inside the burrow",
+        "drifting red and gold leaves",
+        "ripe wheat bowed with grain"
+      ]
+    },
+    {
+      "cut": 5,
+      "scene_label": "베짱이가 가을 풀밭에서 여전히 노래를 부르며 개미를 비웃는 장면",
+      "prompt": "A cool autumn meadow, red and orange leaves swirling in a soft wind. The tall green grasshopper with red scarf still plays its wooden violin perched on a yellowing leaf, swaying as if singing aloud. In the background the small brown ant in straw hat busily carries grains along a path between the stalks. The grasshopper shrugs one shoulder and laughs with light, playful mockery, oblivious to the fading season. Soft slanted autumn sunlight, faint hint of bare branches in the distance",
+      "mood": "carefree denial as the season turns",
+      "key_details": [
+        "grasshopper on a yellowing leaf playing violin",
+        "ant busily carrying grain in the background",
+        "swirling red and orange leaves",
+        "slanted autumn light"
+      ]
+    },
+    {
+      "cut": 6,
+      "scene_label": "베짱이가 눈 덮인 들판에서 추위와 굶주림에 떠는 장면",
+      "prompt": "A harsh winter scene, the entire field buried under fresh white snow with no grass visible. The tall green grasshopper, wrapped tightly in its small red scarf, trembles with cold as it stumbles through deep snow on thin shivering legs. Its old wooden violin hangs limply from one hand, and its face shows hunger and quiet regret. Bare snowy hills roll away behind, a few snowflakes drifting down. Soft blue-grey winter palette kept gentle and child-friendly, sad but not scary or graphic, in classic storybook tradition",
+      "mood": "cold lonely regret, child-friendly sadness",
+      "key_details": [
+        "grasshopper shivering in deep snow",
+        "violin held limply",
+        "bare snowy hills",
+        "soft falling snowflakes",
+        "no grass or food visible"
+      ]
+    },
+    {
+      "cut": 7,
+      "scene_label": "베짱이가 개미의 굴 앞에서 문을 두드리며 도움을 청하는 장면",
+      "prompt": "A small snow-covered earthen mound with the ant's cozy round burrow set into it. The shivering green grasshopper, wrapped in its red scarf and holding the wooden violin meekly, knocks with a trembling hand at the small wooden plank door of the burrow. Warm golden light glows through the cracks of the door and fragrant steam rises softly from a tiny stovepipe chimney. The door cracks open and the small brown ant in straw hat peeks out with a startled, worried expression. Sharp contrast between the cold blue snow outside and the warm orange glow inside",
+      "mood": "humble plea for warmth and kindness",
+      "key_details": [
+        "grasshopper knocking with a trembling hand",
+        "ant peeking from the door with concern",
+        "warm golden light spilling from the burrow",
+        "snowy mound and chimney steam"
+      ]
+    },
+    {
+      "cut": 8,
+      "scene_label": "개미가 반성하는 베짱이를 따뜻한 굴 안으로 들이는 장면",
+      "prompt": "Inside a cozy warm burrow, walls lined with neatly stacked grain piles, a soft golden lamp glowing on a small round wooden table set with a steaming bowl. The small brown ant in straw hat and work vest opens the door wider with a gentle, forgiving smile, gesturing the grasshopper inside. The tall green grasshopper, still wrapped in its red scarf and holding its violin meekly, bows its head with quiet tears of shame and remorse on its face. Through the doorway behind it, faint blue winter light and snow are visible. Dominant warm orange and gold palette, soft heartwarming storybook ending tone",
+      "mood": "warm forgiveness and quiet realization",
+      "key_details": [
+        "ant smiling gently and gesturing inside",
+        "grasshopper bowing head with tears of remorse",
+        "warm lamp on a small table, stacked grain on walls",
+        "snow and blue winter light through the doorway"
+      ]
+    }
+  ]
+}
